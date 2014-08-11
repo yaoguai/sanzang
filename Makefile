@@ -36,6 +36,7 @@ dist:
 	ln README.rest $(DISTDIR)
 	ln TUTORIAL.html $(DISTDIR)
 	ln Makefile $(DISTDIR)
+	ln MANIFEST.in $(DISTDIR)
 	ln setup.py $(DISTDIR)
 	ln bin/szu-ed $(DISTDIR)/bin
 	ln bin/szu-r $(DISTDIR)/bin
