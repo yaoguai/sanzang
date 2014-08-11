@@ -22,7 +22,6 @@
 
 import getopt
 import io
-import readline
 import signal
 import sys
 
