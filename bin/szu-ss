@@ -27,7 +27,7 @@ import sys
 
 USAGE = '''Usage: szu-ss [options] table_file
 
-Make table-based string substitutions
+Table-based string substitution.
 
 Options
   -h, --help       print this help message and exit
