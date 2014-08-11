@@ -34,18 +34,37 @@ Options
   -v, --verbose
 '''
 
-def read_2c_table(file_path):
+def read_2c_table(fd):
     '''
     Read a two-column translation table file.
     '''
-    table = []
-    with open(file_path, 'r', encoding='utf-8-sig') as fin:
-        for line in fin:
-            if '|' in line:
-                from_str = line.split('|')[0].strip()
-                to_str = line.split('|')[1].strip()
-                table.append((from_str, to_str))
-    return table
+    tab = []
+    for line in fd.read().replace(' ', '').split('\n'):
+        rec = line.strip().split('|')
+        if len(rec) == 2:
+            tab.append(rec)
+        elif line.strip() != '':
+            raise RuntimeError('Table error: ' + line.strip())
+    return tab
+
+def subst(table, text):
+    for t1, t2 in table:
+        if t1 in text:
+            text = text.replace(t1, t2)
+            text = text.replace(t1.lower(), t2.lower())
+            text = text.replace(t1.upper(), t2.upper())
+    return text
+
+def stdio_subst(table, buf_size=1000):
+    buffer = ''
+    line_no = 1
+    for line in sys.stdin:
+        buffer += line
+        if line_no % buf_size == 0:
+            sys.stdout.write(subst(table, buffer))
+            buffer = ''
+        line_no += 1
+    sys.stdout.write(subst(table, buffer))
 
 def main():
     '''
@@ -76,15 +95,8 @@ def main():
         if len(args) != 1:
             sys.stderr.write(USAGE + '\n')
             return 1
-
-        table = read_2c_table(sys.argv[1])
-        while True:
-            line = input()
-            for defn in table:
-                line = line.replace(defn[0], defn[1])
-                line = line.replace(defn[0].lower(), defn[1].lower())
-                line = line.replace(defn[0].upper(), defn[1].upper())
-            print(line)
+        with open(sys.argv[1], encoding='utf-8-sig') as table_fd:
+            stdio_subst(read_2c_table(table_fd))
     except EOFError:
         return 0
     except KeyboardInterrupt:
@@ -99,4 +111,4 @@ def main():
     return 0
 
 if __name__ == '__main__':
-    exit(main())
+    sys.exit(main())
