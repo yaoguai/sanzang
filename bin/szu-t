@@ -145,7 +145,7 @@ def main():
         if len(args) != 1:
             sys.stderr.write(USAGE + '\n')
             return 1
-        with open(args[0], 'r', encoding='UTF-8') as table_fd:
+        with open(args[0], 'r', encoding='utf-8-sig') as table_fd:
             translate_file(read_table(table_fd), sys.stdin, sys.stdout)
     except KeyboardInterrupt as err:
         print()
