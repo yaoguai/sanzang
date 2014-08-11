@@ -1,0 +1,95 @@
+.\" Copyright (c) 2014 the Sanzang Utils authors
+.\"
+.\" Permission is hereby granted, free of charge, to any person obtaining a
+.\" copy of this software and associated documentation files (the "Software"),
+.\" to deal in the Software without restriction, including without limitation
+.\" the rights to use, copy, modify, merge, publish, distribute, sublicense,
+.\" and/or sell copies of the Software, and to permit persons to whom the
+.\" Software is furnished to do so, subject to the following conditions:
+.\"
+.\" The above copyright notice and this permission notice shall be included in
+.\" all copies or substantial portions of the Software.
+.\"
+.\" THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+.\" IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+.\" FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+.\" AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+.\" LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+.\" FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+.\" DEALINGS IN THE SOFTWARE.
+.\"
+.TH SZU\-T 1 2014 sanzang-utils "Sanzang Utilities"
+.SH NAME
+szu\-t \- translate CJK text into other languages
+.SH SYNOPSIS
+.B szu\-t
+[\fIoptions\fR] \fItable_file\fR
+.SH DESCRIPTION
+This is a program for translating Chinese, Japanese, or Korean (CJK) text into
+other languages. The translation method uses rules defined in a translation
+table file. These rules are applied at runtime to generate a text translation
+listing. Input text is read from the standard input (stdin) and written to the
+standard output (stdout).
+.PP
+This program requires a translation table file, which is a delimited text file
+in the following format:
+.PP
+.B shijie|world
+.br
+.B nihao|hello
+.PP
+Each line is a translation rule, and each translation rule consists of two or
+more fields delimited by the \*(lq|\*(rq character. The number of fields must
+be consistent throughout the entire table. The first field specifies a term in
+the source language, and subsequent fields define equivalent terms in the
+target language(s).
+.PP
+Using the example table depicted above, if we attempt to translate the text
+\*(lqnihao, shijie\*(rq, then the output of the program is:
+.PP
+.B [1.1] nihao, shijie
+.br
+.B [1.2] \ hello , \ world
+.PP
+Translation tables may contain any number of translation rules, and translation
+rules may contain Unicode characters. If you are editing a translation table
+through a text editor, the table should be saved using the UTF-8 encoding. All
+input and output by this translation program is handled as UTF-8, which ensures
+safe string translation between languages.
+.PP
+Within a translation table, the translation rules should be reverse-sorted by
+the length of the source term (i.e. longest terms first, shortest terms last).
+General table editing and formatting can be handled by the \fBszu-ed\fR(1)
+editor, which automatically handles the correct table formatting.
+.PP
+For more details on translation table formatting and development, please refer
+to the Sanzang Utils tutorial.
+.SH OPTIONS
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+print usage information and then exit
+.TP
+\fB\-v\fR, \fB\-\-verbose\fR
+include information useful for debugging
+.SH EXIT STATUS
+The exit status is 0 on normal termination, and 1 on error.
+.SH DIAGNOSTICS
+Errors will print a message to the standard error stream (stderr). To enable
+stack traces for debugging, enable the \*(lqverbose\*(rq option.
+.SH EXAMPLES
+.B $ szu\-t mytable < infile > outfile
+.PP
+Translate text from \fIinfile\fR to \fIoutfile\fR, using the rules in
+\fImytable\fR.
+.PP
+.B $ cat mytext | szu\-r | szu\-t mytable | less
+.PP
+Use the program as a filter with piped input and output.
+.SH SEE ALSO
+.BR szu\-ed (1),
+.BR szu\-r (1)
+.SH BUGS
+Please contact the author if any bugs are found, or file a bug report with the
+project. Incomplete or inaccurate documentation should be treated as a bug.
+.SH AUTHOR
+yaoguai <http://lapislazulitexts.com/sanzang>

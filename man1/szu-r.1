@@ -1,0 +1,65 @@
+.\" Copyright (c) 2014 the Sanzang Utils authors
+.\"
+.\" Permission is hereby granted, free of charge, to any person obtaining a
+.\" copy of this software and associated documentation files (the "Software"),
+.\" to deal in the Software without restriction, including without limitation
+.\" the rights to use, copy, modify, merge, publish, distribute, sublicense,
+.\" and/or sell copies of the Software, and to permit persons to whom the
+.\" Software is furnished to do so, subject to the following conditions:
+.\"
+.\" The above copyright notice and this permission notice shall be included in
+.\" all copies or substantial portions of the Software.
+.\"
+.\" THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+.\" IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+.\" FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+.\" AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+.\" LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+.\" FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+.\" DEALINGS IN THE SOFTWARE.
+.\"
+.TH SZU\-R 1 2014 sanzang-utils "Sanzang Utilities"
+.SH NAME
+szu\-r \- reformat CJK text for translation
+.SH SYNOPSIS
+.B szu\-r
+[\fIoptions\fR]
+.SH DESCRIPTION
+This tool transforms Chinese, Japanese, or Korean (CJK) text into lines in
+which words are not broken apart. The utility does this by collapsing all line
+breaks, and then reformatting the text based on horizontal spacing and
+punctuation. Input is read from the standard input (stdin) and written to the
+standard output (stdout).
+.PP
+Reformatting CJK text is an important step before attempting machine
+translation on it. This program may be used to preprocess text prior to its
+translation.
+.SH OPTIONS
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+print usage information and then exit
+.TP
+\fB\-v\fR, \fB\-\-verbose\fR
+include information useful for debugging
+.SH EXIT STATUS
+The exit status is 0 on normal termination, and 1 on error.
+.SH DIAGNOSTICS
+Errors will print a message to the standard error stream. To enable stack
+traces for debugging, enable the \*(lqverbose\*(rq option.
+.SH EXAMPLES
+.B
+$ szu\-r < infile > outfile
+.PP
+Read text from one file, reformat it, and write it to another file.
+.PP
+.B
+$ cat mytext | szu\-r | szu\-t mytable
+.PP
+Use the program as a text filter for translation preprocessing.
+.SH SEE ALSO
+.BR szu\-t (1)
+.SH BUGS
+Please contact the author if any bugs are found, or file a bug report with the
+project. Incomplete or inaccurate documentation should be treated as a bug.
+.SH AUTHOR
+yaoguai <http://lapislazulitexts.com/sanzang>

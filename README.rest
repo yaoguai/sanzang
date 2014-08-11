@@ -1,0 +1,57 @@
+Sanzang Utils
+=============
+
+The Sanzang Utilities are a small collection of programs for translating from
+Chinese, Japanese, and Korean (the CJK languages). These tools can be used for
+generating rough but useful translations that closely follow the source text.
+These programs are available under the MIT License.
+
+The Sanzang translation tools use a delimited text file for storing translation
+rules, and a command-based editor is also included that can do both interactive
+editing and scripted table editing. The utilities included in this package are:
+
+* szu-ed(1) - Command-based translation table (ed)itor
+* szu-r(1) - Preprocessor for (r)eformatting CJK text
+* szu-t(1) - The main (t)ranslation program
+* szu-ss(1) - Make (s)tring (s)ubstitutions
+
+These programs all come with the appropriate Unix manual pages. Documentation
+aims to be complete and accurate. Missing or inaccurate information may be
+filed as a bug.
+
+Installation
+------------
+
+To run these programs, Python 3.x is required. Installation on a Unix-like
+platform is advised, but Windows is possible too. If you must use Windows, then
+Cygwin is the best environment for these programs.
+
+To install these programs the "Python way," you can use setup.py::
+
+    # python3 setup.py install
+
+Otherwise, you could do it the "Unix way" by using the makefile::
+
+    # make install
+
+If you install with the Makefile, you can also uninstall with the makefile::
+
+    # make uninstall
+
+The choice of which installation method to use is just a personal preference.
+
+Learning more
+-------------
+
+After installing Sanzang Utils, you may read the tutorial which is included in
+this package. The tutorial gives an introduction to each aspect of the system,
+including how to develop and apply your own translation tables.
+
+Development
+-----------
+
+Versions of Sanzang Utils follow the scheme N.N.N, indicating the major
+version, minor version, and the patch number. The patch number is incremented
+for sets of small updates or bug fixes, the minor number indicates some new
+feature or new behavior, and the major number indicates a big change or new and
+incompatible behavior.

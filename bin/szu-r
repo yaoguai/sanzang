@@ -1,0 +1,140 @@
+#!/usr/bin/env python3
+#
+# Copyright (c) 2014 the Sanzang Utils authors
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+import getopt
+import io
+import signal
+import re
+import sys
+
+USAGE = '''Usage: szu-r [options]
+
+Reformat CJK text for translation.
+
+Options:
+  -h, --help       print this help message and exit
+  -v, --verbose    include information useful for debugging
+'''
+
+def reflow(s):
+    '''
+    Reformat a CJK string according to its punctuation.
+    '''
+    using_crlf = '\r\n' in s
+
+    # Rm CBETA-style margins. We should be careful, when buffering, that any
+    # "ending characters" used for detecting buffer boundaries do not include
+    # those characters found in CBETA margins.
+    #
+    # Margin format: X01n0020_p0404a01(00)║
+    #
+    s = re.sub(r'^[T|X].*?║', '', s, flags=re.M)
+
+    # Separate poetry from prose. If the line is short and starts with a space,
+    # then add another space at the end to separate it from the following text.
+    #
+    s = re.sub(r'^　(.{1,15})$', '　\\1　', s, flags=re.M)
+
+    # Collapse newlines
+    s = s.replace('\r', '').replace('\n', '')
+
+    # Ender followed by non-ender: newline in between.
+    s = re.sub(r'([：，；。？！」』.;:\?])([^：，；。？！」』.;:\?])',
+        '\\1\n\\2', s, flags=re.M)
+
+    # Non-starter, non-ender, followed by a starter: newline in between.
+    s = re.sub(r'([^「『　\t：，；。？！」』.;:\?\n])([「『　\t])',
+        '\\1\n\\2', s, flags=re.M)
+
+    # Adjust newlines
+    if len(s) > 0 and s[-1] != '\n':
+        s += '\n'
+    if using_crlf:
+        s = s.replace('\n', '\r\n')
+    return s
+
+def buf_reflow(fd_in, fd_out, buffer_size=1000):
+    '''
+    Reflow CJK text according to punctuation. Buffered I/O.
+    '''
+    enders = '：，；。？！」』.;:\?'
+    buffer = ''
+    line_n = 0
+
+    for line in fd_in:
+        line_n += 1
+        buffer = buffer + line
+        if line_n % buffer_size == 0:
+            i = len(buffer) - 1
+            while i > 0:
+                if buffer[i-1] in enders and buffer[i] not in enders:
+                    fd_out.write(reflow(buffer[:i]))
+                    buffer = buffer[i:]
+                    i = -1
+                else:
+                    i = i - 1
+    if len(buffer) > 0:
+        fd_out.write(reflow(buffer))
+
+def main():
+    '''
+    Run reflow as a command-line program.
+    '''
+    try:
+        sys.stdin = io.TextIOWrapper(sys.stdin.detach(), encoding='utf-8-sig',
+                errors='strict', newline=None, line_buffering=True)
+        sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding='utf-8',
+                errors='strict', newline=None, line_buffering=True)
+        sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding='utf-8',
+                errors='strict', newline=None, line_buffering=True)
+    except io.UnsupportedOperation:
+        pass  
+
+    if 'SIGPIPE' in dir(signal):
+        signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
+    try:
+        verbose = False
+        opts, args = getopt.getopt(sys.argv[1:], 'hv', ['help', 'verbose'])
+        for o, a in opts:
+            if o in ('-h', '--help'):
+                print(USAGE)
+                return 0
+            if o in ('-v', '--verbose'):
+                verbose = True
+        if len(args) != 0:
+            sys.stderr.write(USAGE + '\n')
+            return 1
+        buf_reflow(sys.stdin, sys.stdout)
+    except KeyboardInterrupt as err:
+        print()
+        return 1
+    except Exception as err:
+        if verbose:
+            raise err
+        else:
+            sys.stderr.write('szu-r: ' + str(err) + '\n')
+            return 1
+    return 0
+
+if __name__ == '__main__':
+    exit(main())

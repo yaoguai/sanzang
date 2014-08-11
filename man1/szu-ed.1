@@ -1,0 +1,117 @@
+.\" Copyright (c) 2014 the Sanzang Utils authors
+.\"
+.\" Permission is hereby granted, free of charge, to any person obtaining a
+.\" copy of this software and associated documentation files (the "Software"),
+.\" to deal in the Software without restriction, including without limitation
+.\" the rights to use, copy, modify, merge, publish, distribute, sublicense,
+.\" and/or sell copies of the Software, and to permit persons to whom the
+.\" Software is furnished to do so, subject to the following conditions:
+.\"
+.\" The above copyright notice and this permission notice shall be included in
+.\" all copies or substantial portions of the Software.
+.\"
+.\" THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+.\" IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+.\" FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+.\" AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+.\" LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+.\" FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+.\" DEALINGS IN THE SOFTWARE.
+.\"
+.TH SZU\-ED 1 2014 sanzang-utils "Sanzang Utilities"
+.SH NAME
+szu\-ed \- edit a translation table
+.SH SYNOPSIS
+.B szu\-ed
+[\fIoptions\fR] \fItable_file\fR
+.SH DESCRIPTION
+This is a program for editing Sanzang translation table rules. The editor can
+accept a small number of commands that allow one to add, modify, or remove
+translation table rules, as well as print the contents, or save the table back
+as a file.
+.PP
+Editor operations are read from the standard input (stdin), while editor output
+is written to the standard output (stdout). Any errors are output to standard
+error (stderr).
+.PP
+Input to the editor is line-based and consists of commands and data. Lines
+beginning with the \*(lq\\\*(rq character are interpreted as commands, while
+those not beginning with this character are interpreted as data.
+.PP
+Commands for changing the editor mode are:
+.PP
+\fB\\get\fR \- Get a table rule (req. source term)
+.br
+\fB\\set\fR \- Set a table rule (req. table rule)
+.br
+\fB\\rm\fR \- Remove a table rule (req. source term)
+.PP
+Commands for immediate editor operations are:
+.PP
+\fB\\p\fR \- Print the current table
+.br
+\fB\\q\fR \- Quit without saving
+.br
+\fB\\w\fR \- Write back to the file
+.br
+\fB\\wq\fR \- Write back to the file and quit
+.PP
+When data is entered, the action taken is determined by the editor mode. If the
+mode requires a table rule, then you will need to enter a table rule in the
+proper format, such as (for two columns):
+.PP
+.B nihao|hello
+.PP
+This is the same format as the data of the translation table itself. On the
+other hand, if the current mode requires a source term, then only the first
+column of the record should be supplied, like so:
+.PP
+.B nihao
+.PP
+The general principle is that a mode that inserts or modifies data naturally
+requires the full rule to be specified, while a mode that just needs to fetch
+or remove an existing rule only requires the source term to do the lookup.
+.SH OPTIONS
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+print usage information and then exit
+.SH EXIT STATUS
+The exit status is 0 on normal termination, and 1 on error.
+.SH DIAGNOSTICS
+Errors will print a message to the standard error stream. A stack trace will be
+printed if the editor encounters a runtime error.
+.SH EXAMPLES
+Example editor invocation:
+.PP
+.B $ szu\-ed mytable < script
+.PP
+Example editor input:
+.PP
+.B
+\\set
+.br
+.B
+nihao|hello
+.br
+.B
+zaijian|goodbye
+.br
+.B
+\\rm
+.br
+.B
+zaijian
+.br
+.B
+\\p
+.br
+.B
+\\wq
+.SH SEE ALSO
+.BR szu\-t (1),
+.BR szu\-ss (1)
+.SH BUGS
+Please contact the author if any bugs are found, or file a bug report with the
+project. Incomplete or inaccurate documentation should be treated as a bug.
+.SH AUTHOR
+yaoguai <http://lapislazulitexts.com/sanzang>

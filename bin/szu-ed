@@ -1,0 +1,162 @@
+#!/usr/bin/env python3
+#
+# Copyright (c) 2014 the Sanzang Utils authors
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+import getopt
+import io
+import os
+import signal
+import sys
+
+try:
+    import readline
+except ImportError:
+    pass
+
+USAGE = '''Usage: szu-ed [options] table_file
+
+Edit translation table rules using a program of simple commands.
+
+Options:
+  -h, --help       print this help message and exit
+'''
+
+def read_table(tab_str):
+    '''
+    Read a translation table from a formatted string.
+    '''
+    tab = {}
+    width = -1
+    for line in tab_str.split('\n'):
+        rec = line.replace(' ', '').strip().split('|')
+        if width != -1 and width == len(rec):
+            tab[rec[0]] = rec[1:]
+        elif width == -1 and len(rec) > 1:
+            width = len(rec)
+            tab[rec[0]] = rec[1:]
+        elif line.strip() != '':
+            raise RuntimeError('Table error: ' + line.strip())
+    return (tab, width)
+
+def table_to_str(tab):
+    '''
+    Produce a formatted string for a translation table.
+    '''
+    s = ''
+    items = list(tab.items())
+    items.sort(key=lambda x: (-len(x[0]), x[0]))
+    for i in items:
+        s += i[0] + '|' + '|'.join(i[1]) + '\n'
+    return s
+
+def edit(table_fpath):
+    '''
+    Open a translation table and runs editor commands from stdin.
+    '''
+    if not os.path.exists(table_fpath):
+        open(table_fpath, 'w', encoding='utf-8').close()
+        tab, width = read_table('')
+    else:
+        with open(table_fpath, 'r', encoding='utf-8-sig') as fin:
+            tab, width = read_table(fin.read())
+    cmd = '\\set'
+    try:
+        while True:
+            line = input().strip()
+            if line in ['\\get', '\\rm', '\\set']:
+                cmd = line
+            elif line == '\\p':
+                print(table_to_str(tab), end='')
+            elif line == '\\q':
+                return
+            elif line == '\\w' or line == '\\wq':
+                with open(table_fpath, 'w', encoding='utf-8') as fout:
+                    fout.write(table_to_str(tab))
+                if line == '\\wq':
+                    return
+            elif line != '' and not line.startswith('\\'):
+                if cmd == '\\get':
+                    try:
+                        print('%s|%s' % (line, '|'.join(tab[line])))
+                    except KeyError:
+                        print('(nil)')
+                elif cmd == '\\rm':
+                    try:
+                        del(tab[line])
+                    except KeyError:
+                        pass
+                elif cmd == '\\set':
+                    toks = line.split('|')
+                    if width == -1 and len(toks) > 1:
+                        width = len(toks)
+                        tab[toks[0]] = toks[1:]
+                    elif len(toks) == width:
+                        tab[toks[0]] = toks[1:]
+                    else:
+                        raise RuntimeError('Invalid assignment: ' + repr(line))
+            elif line.strip() == '':
+                pass
+            else:
+                raise RuntimeError('Syntax error: ' + line)
+    except EOFError:
+        pass
+    except Exception as err:
+        raise err
+
+def main():
+    '''
+    Run the editor as a command-line program.
+    '''
+    try:
+        sys.stdin = io.TextIOWrapper(sys.stdin.detach(), encoding='utf-8-sig',
+                errors='strict', newline=None, line_buffering=True)
+        sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding='utf-8',
+                errors='strict', newline=None, line_buffering=True)
+        sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding='utf-8',
+                errors='strict', newline=None, line_buffering=True)
+    except io.UnsupportedOperation:
+        pass
+
+    if 'SIGPIPE' in dir(signal):
+        signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], 'h', ['help'])
+        for o, a in opts:
+            if o in ('-h', '--help'):
+                print(USAGE)
+                return 0
+        if len(args) != 1:
+            sys.stderr.write(USAGE + '\n')
+            return 1
+        edit(args[0])
+    except getopt.GetoptError as err:
+        sys.stderr.write(USAGE + '\n')
+        return 1
+    except KeyboardInterrupt as err:
+        print()
+        return 1
+    except Exception as err:
+        raise err
+    return 0
+
+if __name__ == '__main__':
+    exit(main())

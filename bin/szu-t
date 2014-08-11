@@ -1,0 +1,162 @@
+#!/usr/bin/env python3
+#
+# Copyright (c) 2014 the Sanzang Utils authors
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+import getopt
+import io
+import signal
+import sys
+
+USAGE = '''Usage: szu-t [options] table_file
+
+Translate CJK text using a translation table file.
+
+Options:
+  -h, --help       print this help message and exit
+  -v, --verbose    include information useful for debugging
+'''
+
+def read_table(fd):
+    '''
+    Read a translation table from an opened file.
+    '''
+    tab = []
+    width = -1
+    for line in fd.read().split('\n'):
+        rec = line.replace(' ', '').strip().split('|')
+        if width != -1 and width == len(rec):
+            tab.append(rec)
+        elif width == -1 and len(rec) > 1:
+            width = len(rec)
+            tab.append(rec)
+        elif line.strip() != '':
+            raise RuntimeError('Table error: ' + line.strip())
+    return tab
+
+def vocab(table, text):
+    '''
+    Build a new table using only the vocabulary in the source text.
+    '''
+    text_rules = []
+    text_copy = str(text)
+    for rec in table:
+        if rec[0] in text_copy:
+            text_copy = text_copy.replace(rec[0], '\x1f')
+            text_rules.append(rec)
+    return text_rules
+
+def translate(table, text):
+    '''
+    Translate text using a table. Returns a list of strings.
+    '''
+    rules = vocab(table, text)
+    text = text.replace('\x1f', '')
+    collection = [text]
+    for col_no in range(1, len(table[0])):
+        trans = text
+        for rec in rules:
+            trans = trans.replace(rec[0], '\x1f' + rec[col_no] + '\x1f')
+        trans = trans.replace('\x1f\r', '\r')
+        trans = trans.replace('\x1f\n', '\n')
+        trans = trans.replace('\x1f\x1f', ' ')
+        trans = trans.replace('\x1f', ' ')
+        collection.append(trans)
+    return collection
+
+def gen_listing(table, buffer, start):
+    '''
+    Translate text using a table. Returns a formatted listing string.
+    '''
+    if '\r\n' in buffer:
+        newline = '\r\n'
+    else:
+        newline = '\n'
+    collection = translate(table, buffer)
+    for i in range(0, len(collection)):
+        collection[i] = collection[i].rstrip().split('\n')
+    listing = ''
+    for line_no in range(0, len(collection[0])):
+        for col_idx in range(0, len(table[0])):
+            listing += '[%d.%d] %s\n' % (
+                    start + line_no, col_idx + 1, collection[col_idx][line_no])
+        listing += newline
+    return listing
+
+def translate_file(table, fd_in, fd_out):
+    '''
+    Translate from one file to another, using buffered translation.
+    '''
+    buf_size = 100
+    buffer = ''
+    line_no = 1
+    for line in fd_in:
+        buffer += line
+        if line_no % buf_size == 0:
+            fd_out.write(gen_listing(table, buffer, line_no - buf_size + 1))
+            buffer = ''
+        line_no += 1
+    position = line_no - buffer.count('\n')
+    fd_out.write(gen_listing(table, buffer, position))
+
+def main():
+    '''
+    Run translator as a command-line program.
+    '''
+    try:
+        sys.stdin = io.TextIOWrapper(sys.stdin.detach(), encoding='utf-8-sig',
+                errors='strict', newline=None, line_buffering=True)
+        sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding='utf-8',
+                errors='strict', newline=None, line_buffering=True)
+        sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding='utf-8',
+                errors='strict', newline=None, line_buffering=True)
+    except io.UnsupportedOperation:
+        pass
+
+    if 'SIGPIPE' in dir(signal):
+        signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
+    verbose = False
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], 'hv', ['help', 'verbose'])
+        for o, a in opts:
+            if o in ('-h', '--help'):
+                print(USAGE)
+                return 0
+            if o in ('-v', '--verbose'):
+                verbose = True
+        if len(args) != 1:
+            sys.stderr.write(USAGE + '\n')
+            return 1
+        with open(args[0], 'r', encoding='UTF-8') as table_fd:
+            translate_file(read_table(table_fd), sys.stdin, sys.stdout)
+    except KeyboardInterrupt as err:
+        print()
+        return 1
+    except Exception as err:
+        if verbose:
+            raise err
+        else:
+            sys.stderr.write('szu-t: ' + str(err) + '\n')
+            return 1
+    return 0
+
+if __name__ == '__main__':
+    exit(main())
