@@ -50,8 +50,15 @@ including how to develop and apply your own translation tables.
 Development
 -----------
 
+Git: https://github.com/yaoguai/sanzang-utils
+
 Versions of Sanzang Utils follow the scheme N.N.N, indicating the major
 version, minor version, and the patch number. The patch number is incremented
 for sets of small updates or bug fixes, the minor number indicates some new
 feature or new behavior, and the major number indicates a big change or new and
 incompatible behavior.
+
+Resources
+---------
+
+Sanzang Homepage: http://lapislazulitexts.com/sanzang
