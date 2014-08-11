@@ -48,6 +48,9 @@ def read_2c_table(fd):
     return tab
 
 def subst(table, text):
+    '''
+    Make string substitutions using a two-column table.
+    '''
     for t1, t2 in table:
         if t1 in text:
             text = text.replace(t1, t2)
@@ -56,6 +59,9 @@ def subst(table, text):
     return text
 
 def stdio_subst(table, buf_size=1000):
+    '''
+    Make string substitutions, from stdin to stdout.
+    '''
     buffer = ''
     line_no = 1
     for line in sys.stdin:
