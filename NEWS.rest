@@ -1,4 +1,15 @@
 Sanzang Utils News
 ==================
 
-* 2014-08-10: Initial commit into git.
+1.0.1 (2014-08-11)
+------------------
+* Tutorial updated to HTML5.
+* Documentation copyedits and formatting.
+* Added MANIFEST.in to include Makefile in the Python package.
+* Fixed minor encoding compatibility issues with UTF-8 BOMs.
+* Improved szu-ss table-loading code to be more robust.
+* Overhauled szu-ss to use buffering -- much more efficient.
+
+1.0.0 (2014-08-10)
+------------------
+* Initial commit into git.

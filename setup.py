@@ -7,10 +7,10 @@ with open('README.rest', 'r', encoding='utf-8') as fin:
 
 setup(
     name = 'sanzang-utils',
-    version = '1.0.0',
+    version = '1.0.1',
     author = 'yaoguai',
     author_email = 'lapislazulitexts@gmail.com',
-    url = 'http://lapislazulitexts.com/sanzang/',
+    url = 'https://github.com/yaoguai/sanzang-utils',
     license = 'MIT',
     description = 'Translate from Chinese, Japanese, or Korean.',
     long_description = LONG_DESCRIPTION,

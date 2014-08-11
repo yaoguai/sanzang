@@ -3,7 +3,7 @@ SHELL = /bin/sh
 PYTHON3 = python3
 
 PROGRAM = sanzang-utils
-VERSION = 1.0.0
+VERSION = 1.0.1
 DISTNAME = $(PROGRAM)-$(VERSION)-src
 DISTDIR = dist/$(DISTNAME)
 
