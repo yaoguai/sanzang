@@ -34,7 +34,7 @@ Otherwise, you could do it the "Unix way" by using the makefile::
 
     # make install
 
-If you install with the Makefile, you can also uninstall with the makefile::
+If you install with the makefile, you can also uninstall with the makefile::
 
     # make uninstall
 
@@ -45,12 +45,15 @@ Learning more
 
 After installing Sanzang Utils, you may read the tutorial which is included in
 this package. The tutorial gives an introduction to each aspect of the system,
-including how to develop and apply your own translation tables.
+including how to develop and apply your own translation tables. Additionally,
+there is also an introductory article, "Sanzang: Introduction & Concepts":
+
+* http://lapislazulitexts.com/articles/sanzang_intro
 
 Development
 -----------
 
-Git: https://github.com/yaoguai/sanzang-utils
+GitHub project: https://github.com/yaoguai/sanzang-utils
 
 Versions of Sanzang Utils follow the scheme N.N.N, indicating the major
 version, minor version, and the patch number. The patch number is incremented
