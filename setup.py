@@ -12,7 +12,7 @@ setup(
     author_email = 'lapislazulitexts@gmail.com',
     url = 'http://lapislazulitexts.com/sanzang/',
     license = 'MIT',
-    description = 'Translate from CJK languages',
+    description = 'Translate from Chinese, Japanese, or Korean.',
     long_description = LONG_DESCRIPTION,
     keywords = 'chinese japanese korean cjk asia language translation',
     classifiers = [
