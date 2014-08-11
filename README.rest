@@ -10,10 +10,10 @@ The Sanzang translation tools use a delimited text file for storing translation
 rules, and a command-based editor is also included that can do both interactive
 editing and scripted table editing. The utilities included in this package are:
 
-* szu-ed(1) - Command-based translation table (ed)itor
-* szu-r(1) - Preprocessor for (r)eformatting CJK text
-* szu-t(1) - The main (t)ranslation program
-* szu-ss(1) - Make (s)tring (s)ubstitutions
+* szu-ed (1) - Command-based translation table editor
+* szu-r (1) - Preprocessor for reformatting CJK text
+* szu-t (1) - The main translation program
+* szu-ss (1) - Make string substitutions
 
 These programs all come with the appropriate Unix manual pages. Documentation
 aims to be complete and accurate. Missing or inaccurate information may be
