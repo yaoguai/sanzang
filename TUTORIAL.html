@@ -1,14 +1,16 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="utf-8" />
     <title>Sanzang Utils Tutorial</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <style type="text/css">
         body {
             font: normal 20px/28px "FreeSans", "Arial", "Lucida Grande", sans-serif;
         }
         pre, code {
             font: normal 19px/28px monospace;
+        }
+        pre {
             background-color: #d9d9d9;
             border: 1px solid black;
             padding: 10px;
@@ -50,7 +52,7 @@
 
 <h2 id="conventions">Conventions</h2>
 
-<p>In this tutorial, text typed at a command shell is prefixed with the sigil “<tt>#</tt>” (superuser) or “<tt>$</tt>” (normal user), following a common Unix conventions for shell prompts. In general, examples of commands and command output are shown as if they were typed into a standard Unix shell.</p>
+<p>In this tutorial, text typed at a command shell is prefixed with the sigil “<code>#</code>” (superuser) or “<code>$</code>” (normal user), following a common Unix conventions for shell prompts. In general, examples of commands and command output are shown as if they were typed into a standard Unix shell.</p>
 
 <p>All text should be saved and handled as UTF-8 text, as the Sanzang Utilities do all input and output in UTF-8. The terminal should be set to UTF-8 as well, and should ideally should be capable of displaying CJK characters.</p>
 
@@ -84,7 +86,7 @@
 烏龍茶|oolong-tea
 餃子|dumplings</pre>
 
-<p>Each line of text is one record in the table, and the “<tt>|</tt>” (vertical bar) character separates the fields of data within a record. The first field is the source term, and each subsequent field is an equivalent term in a target language. The number of fields for each record must be the same throughout the entire table. The records with longer source terms are also placed before records with shorter source terms, which is a requirement of the translation table format.</p>
+<p>Each line of text is one record in the table, and the “<code>|</code>” (vertical bar) character separates the fields of data within a record. The first field is the source term, and each subsequent field is an equivalent term in a target language. The number of fields for each record must be the same throughout the entire table. The records with longer source terms are also placed before records with shorter source terms, which is a requirement of the translation table format.</p>
 
 <p>In this example, we can see that the source language is traditional Chinese, while the target language is English. The use of lowercase and hyphens between English words that we see is merely a useful convention and is not a requirement. In fact, the Sanzang Utils programs do not care which languages and scripts you decide to include in your translation tables, but we should keep in mind that the translation program is mostly useful for translating from Chinese, Japanese, and Korean, due to its translation methodology.</p>
 
@@ -110,7 +112,7 @@ Options:
 
 <p>We can easily fix the text so it will translate safely by running it through <i>szu-r</i>. This is what the command and its output will look like:</p>
 
-<pre>$ szu-r < bad.txt
+<pre>$ szu-r &lt; bad.txt
 世尊食時，
 著衣持缽</pre>
 
@@ -118,7 +120,7 @@ Options:
 
 <p>Of course, we could also redirect the output to a file:</p>
 
-<pre>$ szu-r < bad.txt > good.txt</pre>
+<pre>$ szu-r &lt; bad.txt &gt; good.txt</pre>
 
 <p>This is a normal way to preprocess a text before running the translator.</p>
 
@@ -193,7 +195,7 @@ Rajagrha|Rājagṛha</pre>
 
 <p>Using this table, we could automatically make these replacements in our text by using <i>szu-ss</i>:</p>
 
-<pre>$ szu-ss mytable.txt < input.txt > output.txt</pre>
+<pre>$ szu-ss mytable.txt &lt; input.txt &gt; output.txt</pre>
 
 <p>Of course, <i>szu-ss</i> may be used for many other purposes as well, wherever string substitutions are needed in text. You could just as easily use it for translating from traditional Chinese to simplified Chinese, or any number of other different string or character replacement tasks.</p>
 
@@ -208,24 +210,24 @@ Edit translation table rules using a program of simple commands.
 Options:
   -h, --help       print this help message and exit</pre>
 
-<p>We can see that a translation table file must be specified when invoking the editor. If the translation table file does not yet exist, then the editor will create and open a new translation table file. Once the editor has started, we can enter commands or data. A command starts with the “<tt>\</tt>” character, and has no arguments or parameters. Commands for setting the editor mode are the following:</p>
+<p>We can see that a translation table file must be specified when invoking the editor. If the translation table file does not yet exist, then the editor will create and open a new translation table file. Once the editor has started, we can enter commands or data. A command starts with the “<code>\</code>” character, and has no arguments or parameters. Commands for setting the editor mode are the following:</p>
 
 <ul>
-<li><tt>\get</tt> &ndash; Get a table rule (requires a source term)</li>
-<li><tt>\set</tt> &ndash; Set a table rule (requires a table rule)</li>
-<li><tt>\rm</tt> &ndash; Remove a table rule (requires a source term)</li>
+<li><code>\get</code> &ndash; Get a table rule (requires a source term)</li>
+<li><code>\set</code> &ndash; Set a table rule (requires a table rule)</li>
+<li><code>\rm</code> &ndash; Remove a table rule (requires a source term)</li>
 </ul>
 
 <p>Commands for immediate editor operations are the following:</p>
 
 <ul>
-<li><tt>\p</tt> &ndash; Print the current table
-<li><tt>\q</tt> &ndash; Quit without saving
-<li><tt>\w</tt> &ndash; Write back to the file
-<li><tt>\wq</tt> &ndash; Write back to the file and quit
+<li><code>\p</code> &ndash; Print the current table
+<li><code>\q</code> &ndash; Quit without saving
+<li><code>\w</code> &ndash; Write back to the file
+<li><code>\wq</code> &ndash; Write back to the file and quit
 </ul>
 
-<p>Along with editor commands, you can also specify data. A line of data is any line that does not begin with the “<tt>\</tt>” character. When the editor receives a line of data, it will interpret that data based on the current editor mode. For example, if the editor receives a line of data that is a translation table rule, and the mode is “set”, then the editor will set a translation table rule accordingly. If only a source term is provided and the mode is “rm”, then it will remove a rule from the table for that source term. The default editor mode is “set”.</p>
+<p>Along with editor commands, you can also specify data. A line of data is any line that does not begin with the “<code>\</code>” character. When the editor receives a line of data, it will interpret that data based on the current editor mode. For example, if the editor receives a line of data that is a translation table rule, and the mode is “set”, then the editor will set a translation table rule accordingly. If only a source term is provided and the mode is “rm”, then it will remove a rule from the table for that source term. The default editor mode is “set”.</p>
 
 <p>A normal pattern of editing a table is to set the mode, enter data for that mode, etc., and finally write the table rules back to the translation table file. An example of invoking the editor to create our earliest translation table would be the following:</p>
 
