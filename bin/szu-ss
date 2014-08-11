@@ -101,7 +101,7 @@ def main():
         if len(args) != 1:
             sys.stderr.write(USAGE + '\n')
             return 1
-        with open(sys.argv[1], encoding='utf-8-sig') as table_fd:
+        with open(args[0], encoding='utf-8-sig') as table_fd:
             stdio_subst(read_2c_table(table_fd))
     except EOFError:
         return 0
