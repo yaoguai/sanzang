@@ -4,7 +4,7 @@ Sanzang Utils
 The Sanzang Utilities are a small collection of programs for translating from
 Chinese, Japanese, and Korean (the CJK languages). These tools can be used for
 generating rough but useful translations that closely follow the source text.
-These programs are available under the MIT License.
+These programs are written in Python 3 and are available under the MIT License.
 
 The Sanzang translation tools use a delimited text file for storing translation
 rules, and a command-based editor is also included that can do both interactive
