@@ -97,12 +97,12 @@ def edit(table_fpath):
                     try:
                         print('%s|%s' % (line, '|'.join(tab[line])))
                     except KeyError:
-                        print('(nil)')
+                        sys.stderr.write('Not found: ' + line + '\n')
                 elif cmd == '\\rm':
                     try:
                         del(tab[line])
                     except KeyError:
-                        pass
+                        sys.stderr.write('Not found: ' + line + '\n')
                 elif cmd == '\\set':
                     toks = line.split('|')
                     if width == -1 and len(toks) > 1:
@@ -111,11 +111,11 @@ def edit(table_fpath):
                     elif len(toks) == width:
                         tab[toks[0]] = toks[1:]
                     else:
-                        raise RuntimeError('Invalid assignment: ' + repr(line))
+                        sys.stderr.write('Invalid assignment: ' + line + '\n')
             elif line.strip() == '':
                 pass
             else:
-                raise RuntimeError('Syntax error: ' + line)
+                sys.stderr.write('Syntax error: ' + line + '\n')
     except EOFError:
         pass
     except Exception as err:
