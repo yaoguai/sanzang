@@ -21,7 +21,6 @@ man1dir = $(mandir)/man1
 all:
 
 package:
-	rm -f dist/$(PROGRAM)-$(VERSION).tar.gz
 	$(PYTHON3) setup.py sdist
 
 dist:
