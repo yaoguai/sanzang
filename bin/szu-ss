@@ -31,7 +31,7 @@ Table-based string substitution.
 
 Options
   -h, --help       print this help message and exit
-  -v, --verbose
+  -v, --verbose    include information useful for debugging
 '''
 
 def read_2c_table(fd):
