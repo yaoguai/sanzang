@@ -107,7 +107,7 @@ def main():
         sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding='utf-8',
                 errors='strict', newline=None, line_buffering=True)
     except io.UnsupportedOperation:
-        pass  
+        pass
 
     if 'SIGPIPE' in dir(signal):
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
