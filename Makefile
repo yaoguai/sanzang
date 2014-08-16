@@ -16,11 +16,11 @@ docdir = $(datarootdir)/doc/sanzang-utils
 mandir = $(datarootdir)/man
 man1dir = $(mandir)/man1
 
-.PHONY: all clean dist install package uninstall
+.PHONY: all clean dist install pkg uninstall
 
 all:
 
-package:
+pkg:
 	$(PYTHON3) setup.py sdist
 
 dist:
