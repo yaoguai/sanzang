@@ -45,15 +45,12 @@ Learning more
 
 After installing Sanzang Utils, you may read the tutorial which is included in
 this package. The tutorial gives an introduction to each aspect of the system,
-including how to develop and apply your own translation tables. Additionally,
-there is also an introductory article, "Sanzang: Introduction & Concepts":
-
-* http://lapislazulitexts.com/articles/sanzang_intro
+including how to develop and apply your own translation tables.
 
 Development
 -----------
 
-GitHub project: https://github.com/yaoguai/sanzang-utils
+GitHub project: <https://github.com/yaoguai/sanzang-utils>
 
 Versions of Sanzang Utils follow the scheme N.N.N, indicating the major
 version, minor version, and the patch number. The patch number is incremented
@@ -64,4 +61,6 @@ incompatible behavior.
 Resources
 ---------
 
-Sanzang Homepage: http://lapislazulitexts.com/sanzang
+* *Sanzang Homepage* <http://lapislazulitexts.com/sanzang>
+* *Sanzang: Introduction* <http://lapislazulitexts.com/articles/sanzang_intro>
+* *Sanzang Utils Tutorial* <http://lapislazulitexts.com/articles/szu_tutorial>
