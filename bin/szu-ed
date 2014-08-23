@@ -46,7 +46,7 @@ def read_table(tab_str):
     tab = {}
     width = -1
     for line in tab_str.split('\n'):
-        rec = line.replace(' ', '').strip().split('|')
+        rec = line.strip().split('|')
         if width != -1 and width == len(rec):
             tab[rec[0]] = rec[1:]
         elif width == -1 and len(rec) > 1:
