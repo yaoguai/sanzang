@@ -41,7 +41,7 @@ def read_table(fd):
     tab = []
     width = -1
     for line in fd.read().split('\n'):
-        rec = line.strip().split('|')
+        rec = [f.strip() for f in line.split('|')]
         if width != -1 and width == len(rec):
             tab.append(rec)
         elif width == -1 and len(rec) > 1:

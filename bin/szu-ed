@@ -46,7 +46,7 @@ def read_table(tab_str):
     tab = {}
     width = -1
     for line in tab_str.split('\n'):
-        rec = line.strip().split('|')
+        rec = [f.strip() for f in line.split('|')]
         if width != -1 and width == len(rec):
             tab[rec[0]] = rec[1:]
         elif width == -1 and len(rec) > 1:
@@ -104,7 +104,7 @@ def edit(table_fpath):
                     except KeyError:
                         sys.stderr.write('Not found: ' + line + '\n')
                 elif cmd == '\\set':
-                    toks = line.split('|')
+                    toks = [f.strip() for f in line.split('|')]
                     if width == -1 and len(toks) > 1:
                         width = len(toks)
                         tab[toks[0]] = toks[1:]

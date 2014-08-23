@@ -40,7 +40,7 @@ def read_2c_table(fd):
     '''
     tab = []
     for line in fd.read().split('\n'):
-        rec = line.strip().split('|')
+        rec = [f.strip() for f in line.split('|')]
         if len(rec) == 2:
             tab.append(rec)
         elif line.strip() != '':
