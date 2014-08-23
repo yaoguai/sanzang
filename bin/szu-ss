@@ -39,7 +39,7 @@ def read_2c_table(fd):
     Read a two-column translation table file.
     '''
     tab = []
-    for line in fd.read().replace(' ', '').split('\n'):
+    for line in fd.read().split('\n'):
         rec = line.strip().split('|')
         if len(rec) == 2:
             tab.append(rec)
@@ -52,10 +52,9 @@ def subst(table, text):
     Make string substitutions using a two-column table.
     '''
     for t1, t2 in table:
-        if t1 in text:
-            text = text.replace(t1, t2)
-            text = text.replace(t1.lower(), t2.lower())
-            text = text.replace(t1.upper(), t2.upper())
+        text = text.replace(t1, t2)
+        text = text.replace(t1.lower(), t2.lower())
+        text = text.replace(t1.upper(), t2.upper())
     return text
 
 def stdio_subst(table, buf_size=1000):
