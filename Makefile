@@ -81,7 +81,7 @@ uninstall:
 	rm -f $(docdir)/NEWS.rest
 	rm -f $(docdir)/README.rest
 	rm -f $(docdir)/TUTORIAL.html
-	test -d $(docdir) && rmdir $(docdir)
+	test ! -d $(docdir) || rmdir $(docdir)
 
 clean:
 	rm -f -- *.pyc *.pyo */*.pyc */*.pyo
