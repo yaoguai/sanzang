@@ -1,6 +1,13 @@
 Sanzang Utils News
 ==================
 
+1.0.3 (2014-08-23)
+------------------
+* Translation table fields have surrounding whitespace stripped.
+* All spaces and tabs will not be removed from table fields.
+* Fixed bug in szu-ss so string matching works correctly.
+* Minor documentation fixes.
+
 1.0.2 (2014-08-15)
 ------------------
 * Updated szu-ed to print to stderr for any common exceptions.
