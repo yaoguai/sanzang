@@ -74,7 +74,6 @@ def translate(table, text):
         trans = text
         for rec in rules:
             trans = trans.replace(rec[0], '\x1f' + rec[col_no] + '\x1f')
-        trans = trans.replace('\x1f\r', '\r')
         trans = trans.replace('\x1f\n', '\n')
         trans = trans.replace('\x1f\x1f', ' ')
         trans = trans.replace('\x1f', ' ')
@@ -85,10 +84,6 @@ def gen_listing(table, buffer, start):
     '''
     Translate text using a table. Returns a formatted listing string.
     '''
-    if '\r\n' in buffer:
-        newline = '\r\n'
-    else:
-        newline = '\n'
     collection = translate(table, buffer)
     for i in range(0, len(collection)):
         collection[i] = collection[i].rstrip().split('\n')
@@ -96,8 +91,10 @@ def gen_listing(table, buffer, start):
     for line_no in range(0, len(collection[0])):
         for col_idx in range(0, len(table[0])):
             listing += '[%d.%d] %s\n' % (
-                    start + line_no, col_idx + 1, collection[col_idx][line_no])
-        listing += newline
+                    start + line_no,
+                    col_idx + 1,
+                    collection[col_idx][line_no])
+        listing += '\n'
     return listing
 
 def translate_file(table, fd_in, fd_out):

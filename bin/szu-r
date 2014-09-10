@@ -39,7 +39,6 @@ def reflow(s):
     '''
     Reformat a CJK string according to its punctuation.
     '''
-    using_crlf = '\r\n' in s
 
     # Rm CBETA-style margins. We should be careful, when buffering, that any
     # "ending characters" used for detecting buffer boundaries do not include
@@ -55,7 +54,7 @@ def reflow(s):
     s = re.sub(r'^　(.{1,15})$', '　\\1　', s, flags=re.M)
 
     # Collapse newlines
-    s = s.replace('\r', '').replace('\n', '')
+    s = s.replace('\n', '')
 
     # Ender followed by non-ender: newline in between.
     s = re.sub(r'([：，；。？！」』.;:\?])([^：，；。？！」』.;:\?])',
@@ -68,8 +67,6 @@ def reflow(s):
     # Adjust newlines
     if len(s) > 0 and s[-1] != '\n':
         s += '\n'
-    if using_crlf:
-        s = s.replace('\n', '\r\n')
     return s
 
 def buf_reflow(fd_in, fd_out, buffer_size=1000):
