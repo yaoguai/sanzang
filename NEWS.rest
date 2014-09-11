@@ -1,6 +1,11 @@
 Sanzang Utils News
 ==================
 
+1.0.4 (2014-09-09)
+------------------
+* Updated programs for proper universal newline support.
+* Fixed makefile logic bug (documentation directory removal).
+
 1.0.3 (2014-08-23)
 ------------------
 * Translation table fields have surrounding whitespace stripped.
@@ -18,7 +23,7 @@ Sanzang Utils News
 ------------------
 * Tutorial updated to HTML5.
 * Documentation copyedits and formatting.
-* Added MANIFEST.in to include Makefile in the Python package.
+* Added MANIFEST.in to include makefile in the Python package.
 * Fixed minor encoding compatibility issues with UTF-8 BOMs.
 * Improved szu-ss table-loading code to be more robust.
 * Overhauled szu-ss to use buffering -- much more efficient.

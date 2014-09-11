@@ -7,7 +7,7 @@ with open('README.rest', 'r', encoding='utf-8') as fin:
 
 setup(
     name = 'sanzang-utils',
-    version = '1.0.3',
+    version = '1.0.4',
     author = 'yaoguai',
     author_email = 'lapislazulitexts@gmail.com',
     url = 'https://github.com/yaoguai/sanzang-utils',
