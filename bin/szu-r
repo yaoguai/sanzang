@@ -22,8 +22,8 @@
 
 import getopt
 import io
-import signal
 import re
+import signal
 import sys
 
 USAGE = '''Usage: szu-r [options]
