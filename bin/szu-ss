@@ -132,8 +132,6 @@ def main():
         with open(args[0], encoding='utf-8-sig') as table_fd:
             subst_file(read_2c_table(table_fd), sys.stdin, sys.stdout)
         return 0
-    except EOFError:
-        return 0
     except KeyboardInterrupt:
         print()
         return 1
