@@ -16,38 +16,12 @@ docdir = $(datarootdir)/doc/sanzang-utils
 mandir = $(datarootdir)/man
 man1dir = $(mandir)/man1
 
-.PHONY: all clean dist install pkg uninstall
+.PHONY: all clean dist install uninstall
 
 all:
 
-pkg:
-	$(PYTHON3) setup.py sdist
-
 dist:
-	rm -rf $(DISTDIR)
-	rm -f dist/$(DISTNAME).tar
-	rm -f dist/$(DISTNAME).tar.gz
-	mkdir -p -m 0755 $(DISTDIR)/bin
-	mkdir -p -m 0755 $(DISTDIR)/man1
-	ln AUTHORS.rest $(DISTDIR)
-	ln LICENSE.rest $(DISTDIR)
-	ln NEWS.rest $(DISTDIR)
-	ln README.rest $(DISTDIR)
-	ln TUTORIAL.html $(DISTDIR)
-	ln Makefile $(DISTDIR)
-	ln MANIFEST.in $(DISTDIR)
-	ln setup.py $(DISTDIR)
-	ln bin/szu-ed $(DISTDIR)/bin
-	ln bin/szu-r $(DISTDIR)/bin
-	ln bin/szu-ss $(DISTDIR)/bin
-	ln bin/szu-t $(DISTDIR)/bin
-	ln man1/szu-ed.1 $(DISTDIR)/man1
-	ln man1/szu-r.1 $(DISTDIR)/man1
-	ln man1/szu-ss.1 $(DISTDIR)/man1
-	ln man1/szu-t.1 $(DISTDIR)/man1
-	cd dist && tar cf $(DISTNAME).tar $(DISTNAME)
-	cd dist && gzip -9 $(DISTNAME).tar
-	rm -rf $(DISTDIR)
+	$(PYTHON3) setup.py sdist
 
 install:
 	mkdir -p -m 0755 $(bindir)
