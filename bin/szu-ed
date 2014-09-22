@@ -139,9 +139,7 @@ def edit(table_fpath):
             else:
                 sys.stderr.write('Syntax error: ' + line + '\n')
     except EOFError:
-        pass
-    except Exception as err:
-        raise err
+        return
 
 
 def main():
@@ -183,8 +181,6 @@ def main():
     except KeyboardInterrupt as err:
         print()
         return 1
-    except Exception as err:
-        raise err
 
 
 if __name__ == '__main__':
