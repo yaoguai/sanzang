@@ -20,26 +20,38 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+
+""" szu-ss: program source code. """
+
+
 import getopt
 import io
 import signal
 import sys
 
-USAGE = '''Usage: szu-ss [options] table_file
+
+USAGE = """Usage: szu-ss [options] table_file
 
 Table-based string substitution.
 
 Options
   -h, --help       print this help message and exit
   -v, --verbose    include information useful for debugging
-'''
 
-def read_2c_table(fd):
-    '''
+"""
+
+
+def read_2c_table(table_fd):
+    """
     Read a two-column translation table file.
-    '''
+
+    Given an open file object, read and return the contents of a two-column
+    translation table. If the table is malformed and unreadable, or has
+    more than two columns, a RuntimeError exception is raised.
+
+    """
     tab = []
-    for line in fd.read().split('\n'):
+    for line in table_fd.read().split('\n'):
         rec = [f.strip() for f in line.split('|')]
         if len(rec) == 2:
             tab.append(rec)
@@ -47,41 +59,58 @@ def read_2c_table(fd):
             raise RuntimeError('Table error: ' + line.strip())
     return tab
 
+
 def subst(table, text):
-    '''
+    """
     Make string substitutions using a two-column table.
-    '''
-    for t1, t2 in table:
-        text = text.replace(t1, t2)
-        text = text.replace(t1.lower(), t2.lower())
-        text = text.replace(t1.upper(), t2.upper())
+
+    Three forms of string substitutions are made: the original form, the
+    all lowercase form, and the all uppercase form.
+
+    """
+    for term1, term2 in table:
+        text = text.replace(term1, term2)
+        text = text.replace(term1.lower(), term2.lower())
+        text = text.replace(term1.upper(), term2.upper())
     return text
 
-def stdio_subst(table, buf_size=1000):
-    '''
-    Make string substitutions, from stdin to stdout.
-    '''
-    buffer = ''
+
+def subst_file(table, fd_in, fd_out, buffer_size=1000):
+    """
+    Make string substitutions from file to file (buffered).
+
+    Given the contents of a two-column translation table, along with input
+    and output file objects, make one-to-one string substitutions using
+    buffered I/O.
+
+    """
+    str_buf = ''
     line_no = 1
-    for line in sys.stdin:
-        buffer += line
-        if line_no % buf_size == 0:
-            sys.stdout.write(subst(table, buffer))
-            buffer = ''
+    for line in fd_in:
+        str_buf += line
+        if line_no % buffer_size == 0:
+            fd_out.write(subst(table, str_buf))
+            str_buf = ''
         line_no += 1
-    sys.stdout.write(subst(table, buffer))
+    fd_out.write(subst(table, str_buf))
+
 
 def main():
-    '''
-    Run as a command-line program.
-    '''
+    """
+    Run as a portable command-line program.
+
+    This program handles data through standard I/O streams as UTF-8 text.
+    Input has any leading byte-order marks stripped out from the beginning
+    of the input stream. Broken pipes and SIGINT are handled silently.
+
+    """
     try:
-        sys.stdin = io.TextIOWrapper(sys.stdin.detach(), encoding='utf-8-sig',
-                errors='strict', newline=None, line_buffering=True)
-        sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding='utf-8',
-                errors='strict', newline=None, line_buffering=True)
-        sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding='utf-8',
-                errors='strict', newline=None, line_buffering=True)
+        sys.stdin = io.TextIOWrapper(
+            sys.stdin.detach(), encoding='utf-8-sig', line_buffering=True)
+        sys.stdout = io.TextIOWrapper(
+            sys.stdout.detach(), encoding='utf-8', line_buffering=True)
+        sys.stderr = io.TextIOWrapper(
+            sys.stderr.detach(), encoding='utf-8', line_buffering=True)
     except io.UnsupportedOperation:
         pass
 
@@ -91,17 +120,18 @@ def main():
     try:
         verbose = False
         opts, args = getopt.getopt(sys.argv[1:], 'h', ['help'])
-        for o, a in opts:
-            if o in ('-h', '--help'):
-                print(USAGE)
+        for option, _ in opts:
+            if option in ('-h', '--help'):
+                print(USAGE, end='')
                 return 0
-            if o in ('-v', '--verbose'):
+            if option in ('-v', '--verbose'):
                 verbose = True
         if len(args) != 1:
-            sys.stderr.write(USAGE + '\n')
+            sys.stderr.write(USAGE)
             return 1
         with open(args[0], encoding='utf-8-sig') as table_fd:
-            stdio_subst(read_2c_table(table_fd))
+            subst_file(read_2c_table(table_fd), sys.stdin, sys.stdout)
+        return 0
     except EOFError:
         return 0
     except KeyboardInterrupt:
@@ -113,7 +143,7 @@ def main():
         else:
             sys.stderr.write('szu-ss: ' + str(err) + '\n')
             return 1
-    return 0
+
 
 if __name__ == '__main__':
     sys.exit(main())

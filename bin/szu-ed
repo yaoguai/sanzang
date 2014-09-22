@@ -20,6 +20,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+
+""" szu-ed: program source code. """
+
+
 import getopt
 import io
 import os
@@ -31,18 +35,26 @@ try:
 except ImportError:
     pass
 
-USAGE = '''Usage: szu-ed [options] table_file
+
+USAGE = """Usage: szu-ed [options] table_file
 
 Edit translation table rules using a program of simple commands.
 
 Options:
   -h, --help       print this help message and exit
-'''
+
+"""
+
 
 def read_table(tab_str):
-    '''
+    """
     Read a translation table from a formatted string.
-    '''
+
+    Given a translation table as a formatted string, load the contents and
+    return them as a dictionary. The keys are source terms (column 1),
+    while each value is a list of the corresponding terms.
+
+    """
     tab = {}
     width = -1
     for line in tab_str.split('\n'):
@@ -56,21 +68,31 @@ def read_table(tab_str):
             raise RuntimeError('Table error: ' + line.strip())
     return (tab, width)
 
+
 def table_to_str(tab):
-    '''
+    """
     Produce a formatted string for a translation table.
-    '''
-    s = ''
+
+    Given a table stored as a dictionary, sort the contents and return the
+    table as text in the translation table format for storage.
+
+    """
+    table_str = ''
     items = list(tab.items())
     items.sort(key=lambda x: (-len(x[0]), x[0]))
     for i in items:
-        s += i[0] + '|' + '|'.join(i[1]) + '\n'
-    return s
+        table_str += i[0] + '|' + '|'.join(i[1]) + '\n'
+    return table_str
+
 
 def edit(table_fpath):
-    '''
-    Open a translation table and runs editor commands from stdin.
-    '''
+    """
+    Open a translation table and run editor commands.
+
+    Editor commands are read from standard input, and non-error output is
+    written to standard output. Errors are printed to standard error.
+
+    """
     if not os.path.exists(table_fpath):
         open(table_fpath, 'w', encoding='utf-8').close()
         tab, width = read_table('')
@@ -100,7 +122,7 @@ def edit(table_fpath):
                         sys.stderr.write('Not found: ' + line + '\n')
                 elif cmd == '\\rm':
                     try:
-                        del(tab[line])
+                        del tab[line]
                     except KeyError:
                         sys.stderr.write('Not found: ' + line + '\n')
                 elif cmd == '\\set':
@@ -121,17 +143,23 @@ def edit(table_fpath):
     except Exception as err:
         raise err
 
+
 def main():
-    '''
-    Run the editor as a command-line program.
-    '''
+    """
+    Run szu-ed as a portable command-line program.
+
+    This program handles data through standard I/O streams as UTF-8 text.
+    Input has any leading byte-order mark stripped if one is found. Broken
+    pipes and SIGINT are handled silently.
+
+    """
     try:
-        sys.stdin = io.TextIOWrapper(sys.stdin.detach(), encoding='utf-8-sig',
-                errors='strict', newline=None, line_buffering=True)
-        sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding='utf-8',
-                errors='strict', newline=None, line_buffering=True)
-        sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding='utf-8',
-                errors='strict', newline=None, line_buffering=True)
+        sys.stdin = io.TextIOWrapper(
+            sys.stdin.detach(), encoding='utf-8-sig', line_buffering=True)
+        sys.stdout = io.TextIOWrapper(
+            sys.stdout.detach(), encoding='utf-8', line_buffering=True)
+        sys.stderr = io.TextIOWrapper(
+            sys.stderr.detach(), encoding='utf-8', line_buffering=True)
     except io.UnsupportedOperation:
         pass
 
@@ -140,23 +168,24 @@ def main():
 
     try:
         opts, args = getopt.getopt(sys.argv[1:], 'h', ['help'])
-        for o, a in opts:
-            if o in ('-h', '--help'):
-                print(USAGE)
+        for option, _ in opts:
+            if option in ('-h', '--help'):
+                print(USAGE, end='')
                 return 0
         if len(args) != 1:
-            sys.stderr.write(USAGE + '\n')
+            sys.stderr.write(USAGE)
             return 1
         edit(args[0])
+        return 0
     except getopt.GetoptError as err:
-        sys.stderr.write(USAGE + '\n')
+        sys.stderr.write(USAGE)
         return 1
     except KeyboardInterrupt as err:
         print()
         return 1
     except Exception as err:
         raise err
-    return 0
+
 
 if __name__ == '__main__':
     sys.exit(main())
