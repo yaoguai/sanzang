@@ -21,7 +21,7 @@
 # SOFTWARE.
 
 
-""" szu-r: program source code. """
+""" szu-r: program source. """
 
 
 import getopt

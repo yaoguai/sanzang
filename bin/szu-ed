@@ -21,7 +21,7 @@
 # SOFTWARE.
 
 
-""" szu-ed: program source code. """
+""" szu-ed: program source. """
 
 
 import getopt
@@ -175,10 +175,10 @@ def main():
             return 1
         edit(args[0])
         return 0
-    except getopt.GetoptError as err:
+    except getopt.GetoptError:
         sys.stderr.write(USAGE)
         return 1
-    except KeyboardInterrupt as err:
+    except KeyboardInterrupt:
         print()
         return 1
 
