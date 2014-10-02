@@ -45,15 +45,15 @@ setup(
         'bin/szu-ss',
         'bin/szu-t'],
     data_files=[
-        ['share/doc/sanzang-utils', [
+        ('share/doc/sanzang-utils', [
             'AUTHORS.rest',
             'LICENSE.rest',
             'NEWS.rest',
             'README.rest',
-            'TUTORIAL.html']],
-        ['share/man/man1', [
+            'TUTORIAL.html']),
+        ('share/man/man1', [
             'man1/szu-ed.1',
             'man1/szu-r.1',
             'man1/szu-ss.1',
-            'man1/szu-t.1']]]
+            'man1/szu-t.1'])]
 )
