@@ -15,9 +15,9 @@ editing and scripted table editing. The utilities included in this package are:
 * szu-t (1) - The main translation program
 * szu-ss (1) - Make string substitutions
 
-These programs all come with the appropriate Unix manual pages. Documentation
-aims to be complete and accurate. Missing or inaccurate information may be
-filed as a bug.
+These programs all come with standard Unix manual pages, and a tutorial is also
+available. Program documentation aims to be complete and accurate. Missing or
+inaccurate information may be filed as a bug.
 
 Installation
 ------------
@@ -47,6 +47,10 @@ After installing Sanzang Utils, you may read the tutorial which is included in
 this package. The tutorial gives an introduction to each aspect of the system,
 including how to develop and apply your own translation tables.
 
+* *Sanzang Homepage* <http://lapislazulitexts.com/sanzang>
+* *Sanzang: Introduction* <http://lapislazulitexts.com/articles/sanzang_intro>
+* *Sanzang Utils Tutorial* <http://lapislazulitexts.com/articles/szu_tutorial>
+
 Development
 -----------
 
@@ -57,10 +61,3 @@ version, minor version, and the patch number. The patch number is incremented
 for sets of small updates or bug fixes, the minor number indicates some new
 feature or new behavior, and the major number indicates a big change or new and
 incompatible behavior.
-
-Resources
----------
-
-* *Sanzang Homepage* <http://lapislazulitexts.com/sanzang>
-* *Sanzang: Introduction* <http://lapislazulitexts.com/articles/sanzang_intro>
-* *Sanzang Utils Tutorial* <http://lapislazulitexts.com/articles/szu_tutorial>
