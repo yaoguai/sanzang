@@ -2,11 +2,6 @@ INSTALL = install
 SHELL = /bin/sh
 PYTHON3 = python3
 
-PROGRAM = sanzang-utils
-VERSION = 1.0.4
-DISTNAME = $(PROGRAM)-$(VERSION)-src
-DISTDIR = dist/$(DISTNAME)
-
 prefix = /usr/local
 exec_prefix = $(prefix)
 bindir = $(exec_prefix)/bin
