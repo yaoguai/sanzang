@@ -103,7 +103,7 @@ def edit(table_fpath):
     try:
         while True:
             line = input().strip()
-            if line in ['\\get', '\\rm', '\\set']:
+            if line in ('\\get', '\\rm', '\\set'):
                 cmd = line
             elif line == '\\p':
                 print(table_to_str(tab), end='')
