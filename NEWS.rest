@@ -1,6 +1,13 @@
 Sanzang Utils News
 ==================
 
+1.0.5 (2014-10-02)
+------------------
+* Makefile dist target now just builds a Python dist.
+* Removed superfluous exception handling.
+* Updated source code according to pep8 and pep257.
+* Documentation fixes and updates.
+
 1.0.4 (2014-09-09)
 ------------------
 * Updated programs for proper universal newline support.

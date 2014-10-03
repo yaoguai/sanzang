@@ -12,7 +12,7 @@ setup(
     # Basic information
     #
     name='sanzang-utils',
-    version='1.0.4',
+    version='1.0.5',
     author='yaoguai',
     author_email='lapislazulitexts@gmail.com',
     url='https://github.com/yaoguai/sanzang-utils',
