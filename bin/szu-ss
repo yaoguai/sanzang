@@ -130,7 +130,8 @@ def main():
             sys.stderr.write(USAGE)
             return 1
         with open(args[0], encoding='utf-8-sig') as table_fd:
-            subst_file(read_2c_table(table_fd), sys.stdin, sys.stdout)
+            table = read_2c_table(table_fd)
+        subst_file(table, sys.stdin, sys.stdout)
         return 0
     except KeyboardInterrupt:
         print()
