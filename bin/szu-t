@@ -121,7 +121,7 @@ def tr_fmt(table, buffer, start):
     listing = ''
     for line_no in range(0, len(collection[0])):
         for col_idx in range(0, len(table[0])):
-            listing += '%d.%d: %s\n' % (
+            listing += '%d.%d|%s\n' % (
                 start + line_no,
                 col_idx + 1,
                 collection[col_idx][line_no])
