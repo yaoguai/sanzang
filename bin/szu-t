@@ -191,7 +191,6 @@ def main():
         tr_file(table, sys.stdin, sys.stdout)
         return 0
     except KeyboardInterrupt as err:
-        print()
         return 1
     except Exception as err:
         if verbose:
