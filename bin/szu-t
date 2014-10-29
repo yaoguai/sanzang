@@ -30,9 +30,9 @@ import signal
 import sys
 
 
-USAGE = """Usage: szu-t [options] table_file
+USAGE = """Usage: szu-t [options] table_file [file ...]
 
-Translate CJK text using a translation table file.
+Translate CJK text using a translation table.
 
 Options:
   -h, --help       print this help message and exit
@@ -129,7 +129,7 @@ def tr_fmt(table, buffer, start):
     return listing
 
 
-def tr_file(table, fd_in, fd_out):
+def tr_file(table, fd_in, fd_out, start_idx=1):
     """
     Translate from one file to another (buffered).
 
@@ -140,7 +140,7 @@ def tr_file(table, fd_in, fd_out):
     """
     buf_size = 100
     str_buf = ''
-    line_no = 1
+    line_no = start_idx
     for line in fd_in:
         str_buf += line
         if line_no % buf_size == 0:
@@ -149,6 +149,7 @@ def tr_file(table, fd_in, fd_out):
         line_no += 1
     position = line_no - str_buf.count('\n')
     fd_out.write(tr_fmt(table, str_buf, position))
+    return line_no
 
 
 def main():
@@ -183,12 +184,18 @@ def main():
                 return 0
             if option in ('-v', '--verbose'):
                 verbose = True
-        if len(args) != 1:
+        if len(args) < 1:
             sys.stderr.write(USAGE)
             return 1
         with open(args[0], 'r', encoding='utf-8-sig') as table_fd:
             table = read_table(table_fd)
-        tr_file(table, sys.stdin, sys.stdout)
+        if len(args) == 1:
+            tr_file(table, sys.stdin, sys.stdout)
+        else:
+            idx = 1
+            for file_path in args[1:]:
+                with open(file_path, 'r', encoding='utf-8-sig') as fin:
+                    idx = tr_file(table, fin, sys.stdout, idx)
         return 0
     except KeyboardInterrupt as err:
         return 1
