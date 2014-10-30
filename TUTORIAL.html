@@ -94,7 +94,7 @@
 
 <p>The first utility to learn is <i>szu-r</i>, the reflow or reformatting utility. This is a formatter for CJK text that first collapses all vertical spacing, and then reorganizes the text into lines based on the horizontal spacing and punctuation found. It divides CJK text into logical lines that may be translated more safely. Usage information for this tool is shown below:</p>
 
-<pre>Usage: szu-r [options]
+<pre>Usage: szu-r [options] [file ...]
 
 Reformat CJK text into lines safe for translation.
 
@@ -112,7 +112,7 @@ Options:
 
 <p>We can easily fix the text so it will translate safely by running it through <i>szu-r</i>. This is what the command and its output will look like:</p>
 
-<pre>$ szu-r &lt; bad.txt
+<pre>$ szu-r bad.txt
 世尊食時，
 著衣持缽</pre>
 
@@ -120,7 +120,7 @@ Options:
 
 <p>Of course, we could also redirect the output to a file:</p>
 
-<pre>$ szu-r &lt; bad.txt &gt; good.txt</pre>
+<pre>$ szu-r bad.txt &gt; good.txt</pre>
 
 <p>This is a normal way to preprocess a text before running the translator.</p>
 
@@ -128,7 +128,7 @@ Options:
 
 <p>The next step is to learn <i>szu-t</i>, the translator. Since this is the main translation program, it is important to understand its method and features. The usage information for <i>szu-t</i> is shown below:</p>
 
-<pre>Usage: szu-t [options] table_file
+<pre>Usage: szu-t [options] table_file [file ...]
 
 Translate CJK text using a translation table file.
 
@@ -178,7 +178,7 @@ Options:
 
 <p>Along with the standard translator, there is also a smaller tool, <i>szu-ss</i>, for string substition, or string-to-string translation. Using this tool, you can perform fixed string substitions within the source text itself, and uppercase and lowercase variations are handled automatically. The usage information is as follows:</p>
 
-<pre>Usage: szu-ss [options] table_file
+<pre>Usage: szu-ss [options] table_file [file ...]
 
 Make string substitutions using two-column translation table
 
@@ -195,7 +195,7 @@ Rajagrha|Rājagṛha</pre>
 
 <p>Using this table, we could automatically make these replacements in our text by using <i>szu-ss</i>:</p>
 
-<pre>$ szu-ss mytable.txt &lt; input.txt &gt; output.txt</pre>
+<pre>$ szu-ss mytable.txt input.txt &gt; output.txt</pre>
 
 <p>Of course, <i>szu-ss</i> may be used for many other purposes as well, wherever string substitutions are needed in text. You could just as easily use it for translating from traditional Chinese to simplified Chinese, or any number of other different string or character replacement tasks.</p>
 
