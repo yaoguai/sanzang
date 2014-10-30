@@ -31,7 +31,7 @@ import signal
 import sys
 
 
-USAGE = """Usage: szu-r [options]
+USAGE = """Usage: szu-r [options] [file ...]
 
 Reformat CJK text for translation.
 
@@ -142,10 +142,12 @@ def main():
                 return 0
             if option in ('-v', '--verbose'):
                 verbose = True
-        if len(args) != 0:
-            sys.stderr.write(USAGE)
-            return 1
-        reflow_file(sys.stdin, sys.stdout)
+        if len(args) == 0:
+            reflow_file(sys.stdin, sys.stdout)
+        else:
+            for file_path in args:
+                with open(file_path, 'r', encoding='utf-8-sig') as fin:
+                    reflow_file(fin, sys.stdout)
         return 0
     except KeyboardInterrupt as err:
         return 1

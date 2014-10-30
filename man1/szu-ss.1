@@ -23,7 +23,7 @@
 szu\-ss \- table-based string substitution
 .SH SYNOPSIS
 .B szu\-ss
-[options] table_file
+[options] table_file [file ...]
 .SH DESCRIPTION
 This is a program for making fixed string substitutions using a two-column
 translation table file. After reading the input text, each source term is
@@ -31,8 +31,8 @@ translated into its translated into its equivalent translation term. Three
 types of substitutions are made for each term: with normal capitalization,
 converted to lowercase, and converted to uppercase. Substitutions will also be
 made if the source term only matches part of the word, so this tool should be
-used with caution. This program reads text from the standard input (stdin) and
-writes text to the standard output (stdout).
+used with caution. If no input file is specified, text is read from the
+standard input (stdin). Output is written to the standard output (stdout).
 .PP
 For more details on translation table formatting and development, please refer
 to the tutorial, as well as the manual page for szu\-t.
