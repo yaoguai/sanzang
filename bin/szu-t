@@ -197,7 +197,8 @@ def main():
                 with open(file_path, 'r', encoding='utf-8-sig') as fin:
                     idx = tr_file(table, fin, sys.stdout, idx)
         return 0
-    except KeyboardInterrupt as err:
+    except KeyboardInterrupt:
+        print()
         return 1
     except Exception as err:
         if verbose:

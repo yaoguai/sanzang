@@ -149,7 +149,8 @@ def main():
                 with open(file_path, 'r', encoding='utf-8-sig') as fin:
                     reflow_file(fin, sys.stdout)
         return 0
-    except KeyboardInterrupt as err:
+    except KeyboardInterrupt:
+        print()
         return 1
     except Exception as err:
         if verbose:

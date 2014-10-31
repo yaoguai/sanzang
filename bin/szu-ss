@@ -136,6 +136,7 @@ def main():
                     subst_file(table, fin, sys.stdout)
         return 0
     except KeyboardInterrupt:
+        print()
         return 1
     except Exception as err:
         if verbose:

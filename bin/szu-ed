@@ -179,6 +179,7 @@ def main():
         sys.stderr.write(USAGE)
         return 1
     except KeyboardInterrupt:
+        print()
         return 1
 
 
