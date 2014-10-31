@@ -2,10 +2,10 @@ INSTALL = install
 SHELL = /bin/sh
 PYTHON3 = python3
 
-# Variables below are set to the defaults for Cygwin, Linux, and Mac OS X. If
+# The variables below are set to the defaults for Cygwin, Linux, and OS X. If
 # you are installing or uninstalling on a different type of system, or using
-# non-default locations, you should specify these as needed. For example,
-# installing to "/usr/local" on BSD or Solaris:
+# non-default locations, then you should specify these as needed. For example,
+# if you are installing to "/usr/local" and using BSD or Solaris:
 #
 # make install prefix=/usr/local mandir=/usr/local/man
 
