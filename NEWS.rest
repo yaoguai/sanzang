@@ -1,6 +1,13 @@
 Sanzang Utils News
 ==================
 
+1.1.0 (2014-10-31)
+------------------
+* Added support for input files as positional arguments to commands.
+* Changed szu-t list notation to be more compact to aid readability.
+* Added a makefile note about setting parameters for BSD, Solaris, etc.
+* Programs updated to close a table file immediately after reading it.
+
 1.0.5 (2014-10-02)
 ------------------
 * Makefile dist target now just builds a Python dist.
