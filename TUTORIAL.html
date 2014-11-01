@@ -148,29 +148,29 @@ Options:
 <p>In our first column, we have the source language (Chinese), followed by the pronunciation (Pinyin), and finally the English. If we now run <i>szu-t</i> with our translation table, and input the Chinese phrase, it will generate a translation for us:</p>
 
 <pre>$ echo '你好，世界！' | szu-t mytable.txt
-[1.1] 你好，世界！
-[1.2] nǐhǎo ， shìjiè ！
-[1.3] hello ， world ！</pre>
+1.1|你好，世界！
+1.2| nǐhǎo ， shìjiè ！
+1.3| hello ， world ！</pre>
 
 <p>Although this example is trivial, it shows some of the simplicity and flexibility of the system. By just defining a table of translation rules, you are able to define your own way of translating. The translation method scales up as well, as it is anticipated that a truly capable translation system naturally requires thousands of translation rules.</p>
 
 <p>Consider the following translated excerpt from a traditional Chinese text:</p>
 
-<pre>[43.1] 善男子、善女人，
-[43.2]  shàn-nánzǐ & shàn-nǚrén ,
-[43.3]  good-man & good-woman ,
+<pre>43.1|善男子、善女人，
+43.2| shàn-nánzǐ & shàn-nǚrén ,
+43.3| good-man & good-woman ,
 
-[44.1] 發阿耨多羅三藐三菩提心，
-[44.2]  fā-ānòuduōluó-sānmiǎo-sānpútí-xīn ,
-[44.3]  develop-the-mind-of-anuttarā-samyaksaṃbodhi ,
+44.1|發阿耨多羅三藐三菩提心，
+44.2| fā-ānòuduōluó-sānmiǎo-sānpútí-xīn ,
+44.3| develop-the-mind-of-anuttarā-samyaksaṃbodhi ,
 
-[45.1] 應如是住，
-[45.2]  yìng rúshì zhù ,
-[45.3]  should/worthy thusly abide/in ,
+45.1|應如是住，
+45.2| yìng rúshì zhù ,
+45.3| should/worthy thusly abide/in ,
 
-[46.1] 如是降伏其心。」
-[46.2]  rúshì xiángfú qí xīn ¶ ”
-[46.3]  thusly subdue (preceding) mind/heart ¶ ”</pre>
+46.1|如是降伏其心。」
+46.2| rúshì xiángfú qí xīn ¶ ”
+46.3| thusly subdue (preceding) mind/heart ¶ ”</pre>
 
 <p>Although the grammar is rough and close to the original Chinese grammar, the basic meaning becomes apparent from the translation alone. From this, we can see that the system is useful and readily applicable so long as the translation table rules are adequately defined.</p>
 
