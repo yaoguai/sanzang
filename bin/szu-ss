@@ -126,6 +126,9 @@ def main():
                 return 0
             if option in ('-v', '--verbose'):
                 verbose = True
+        if len(args) < 1:
+            sys.stderr.write(USAGE)
+            return 1
         with open(args[0], encoding='utf-8-sig') as table_fd:
             table = read_2c_table(table_fd)
         if len(args) == 1:
