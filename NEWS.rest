@@ -1,6 +1,11 @@
 Sanzang Utils News
 ==================
 
+1.1.1 (2014-11-22)
+------------------
+* szu-ss fixed to show usage if there are too few arguments.
+* Tutorial updated to use new listing notation.
+
 1.1.0 (2014-10-31)
 ------------------
 * Added support for input files as positional arguments to commands.
