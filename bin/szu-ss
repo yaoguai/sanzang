@@ -150,7 +150,7 @@ def main():
         return 1
     except Exception as err:
         if verbose:
-            raise err
+            raise
         else:
             sys.stderr.write('szu-ss: ' + str(err) + '\n')
             return 1
