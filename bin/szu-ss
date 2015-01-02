@@ -126,7 +126,7 @@ def main():
 
     try:
         verbose = False
-        opts, args = getopt.getopt(sys.argv[1:], 'h', ['help'])
+        opts, args = getopt.getopt(sys.argv[1:], 'hv', ['help', 'verbose'])
         for option, _ in opts:
             if option in ('-h', '--help'):
                 print(USAGE, end='')
