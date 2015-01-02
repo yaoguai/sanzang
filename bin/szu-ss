@@ -41,13 +41,14 @@ Options
 """
 
 
-def read_2c_table(table_fd):
+def read_ss_table(table_fd):
     """
-    Read a two-column translation table file.
+    Read a two-column translation table file for substitutions.
 
     Given an open file object, read and return the contents of a two-column
-    translation table. If the table is malformed and unreadable, or has
-    more than two columns, a RuntimeError exception is raised.
+    translation table. If uppercase or lowercase variants of the source
+    term are available, add records for these variants automatically. For a
+    record with more than two columns, a RuntimeError exception is raised.
 
     """
     tab = []
@@ -55,6 +56,13 @@ def read_2c_table(table_fd):
         rec = [f.strip() for f in line.split('|')]
         if len(rec) == 2:
             tab.append(rec)
+            term1, term2 = rec
+            term1_lower = term1.lower()
+            term1_upper = term1.upper()
+            if term1 != term1_lower:
+                tab.append([term1_lower, term2.lower()])
+            if term1 != term1_upper:
+                tab.append([term1_upper, term2.upper()])
         elif line.strip() != '':
             raise RuntimeError('Table error: ' + line.strip())
     return tab
@@ -64,14 +72,13 @@ def subst(table, text):
     """
     Make string substitutions using a two-column table.
 
-    Three forms of string substitutions are made: the original form, the
-    all lowercase form, and the all uppercase form.
+    The table specified should already contain any uppercase and lowercase
+    variants that should be applied for substitution.
 
     """
     for term1, term2 in table:
-        text = text.replace(term1, term2)
-        text = text.replace(term1.lower(), term2.lower())
-        text = text.replace(term1.upper(), term2.upper())
+        if term1 in text:
+            text = text.replace(term1, term2)
     return text
 
 
@@ -130,7 +137,7 @@ def main():
             sys.stderr.write(USAGE)
             return 1
         with open(args[0], encoding='utf-8-sig') as table_fd:
-            table = read_2c_table(table_fd)
+            table = read_ss_table(table_fd)
         if len(args) == 1:
             subst_file(table, sys.stdin, sys.stdout)
         else:
