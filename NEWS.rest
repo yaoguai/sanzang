@@ -1,6 +1,12 @@
 Sanzang Utils News
 ==================
 
+1.1.2 (2015-01-03)
+------------------
+* szu-ss updated with major performance improvements (~200-300%).
+* szu-ss "verbose" option fixed to function correctly.
+* Verbose modes now preserve the original stack trace for debugging.
+
 1.1.1 (2014-11-22)
 ------------------
 * szu-ss fixed to show usage if there are too few arguments.
