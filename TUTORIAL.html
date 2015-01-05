@@ -5,14 +5,31 @@
     <title>Sanzang Utils Tutorial</title>
     <style type="text/css">
         body {
-            font: normal 20px/28px "FreeSans", "Arial", "Lucida Grande", sans-serif;
+            font: normal 21px/28px "Helvetica", "Nimbus Sans L",
+                "TeX Gyre Heros", "Helvetica Neue", "Arial", "FreeSans",
+                "Tahoma", "AR PL UMing HK", "宋体", sans-serif;
+            margin: 20px;
+        }
+        p, ol, ul, pre {
+            margin-top: 0px;
+            margin-bottom: 31px;
+        }
+        h1 {
+            font-size: 64px;
+            margin-top: 44px;
+            margin-bottom: 60px;
+        }
+        h2 {
+            font-size: 48px;
+            margin-top: 48px;
+            margin-bottom: 48px;
         }
         pre, code {
-            font: normal 19px/28px monospace;
+            font: normal 19px/25px monospace;
         }
         pre {
             background-color: #d9d9d9;
-            border: 1px solid black;
+            border: 1px solid #999999;
             padding: 10px;
         }
         a:link, a:active, a:visited {
@@ -27,14 +44,13 @@
 
 <h1 id="top">Sanzang Utils Tutorial</h1>
 
-<h2 id="contents">Contents</h2>
 <ol>
   <li><a href="#intro">Introduction</a></li>
   <li><a href="#conventions">Conventions</a></li>
   <li><a href="#installation">Installation</a></li>
   <li><a href="#tables">Translation Tables</a></li>
-  <li><a href="#szu_r">Text Reformatting: <i>szu-r</i></a></li>
-  <li><a href="#szu_t">Translation: <i>szu-t</i></a></li>
+  <li><a href="#szu_r">CJK Text Reformatting: <i>szu-r</i></a></li>
+  <li><a href="#szu_t">CJK Text Translation: <i>szu-t</i></a></li>
   <li><a href="#szu_ss">String Substitution: <i>szu-ss</i></a></li>
   <li><a href="#szu_ed">Table Editor: <i>szu-ed</i></a></li>
   <li><a href="#manpages">Man Pages</a></li>
@@ -44,9 +60,9 @@
 
 <h2 id="intro">Introduction</h2>
 
-<p>The Sanzang Utilities are a small group of programs based around a simple way of translating from the CJK languages (Chinese, Japanese, and Korean). Using these tools, you can develop your own translation rules and apply them to generate rough translations.</p>
+<p>The Sanzang Utilities are a collection of programs based around a simple way of translating from the CJK languages (Chinese, Japanese, and Korean). Using these tools, you can develop your own translation rules and apply them to automatically generate rough translations. These rough translations can be used as reading and translation aids.</p>
 
-<p>The Sanzang Utilities were originally developed with the intention of building a system for assisting translators of the Chinese Buddhist canon into other languages. This is where the software gets the name “Sanzang” (三藏), meaning <i>Tripitaka</i>, which is a general designation for the Buddhist canon. However, these programs may also be very useful for translating from modern Chinese and other related languages as well. The Sanzang system is different from others in part because it closely follows the original language and grammar, allowing it to be useful even for some subtle or difficult passages where others fail.</p>
+<p>The Sanzang Utilities were originally developed with the intention of building a system for assisting translators of the Chinese Buddhist canon into other languages. This is where the software gets the name “Sanzang” (三藏), meaning <i>Tripiṭaka</i>, which is a general designation for the Buddhist canon. However, these programs may also be very useful for translating from modern Chinese and other related languages as well. The Sanzang system is different from others in part because it closely follows the original language and grammar, allowing it to be useful even for some subtle or difficult passages where others fail.</p>
 
 <p>These programs are implemented in the Python programming language (Python 3), which allows them to be portable and multi-platform. They are written as small command-line programs that may be run from a command shell. Because they are developed following the Unix philosophy, each program is meant to do one thing well, and each handles data through standard I/O streams. Due to this general orientation, it is advisable to use these programs in an environment like Unix, Linux, BSD, OS X, etc. For running these programs on Windows, a Cygwin environment is best.</p>
 
@@ -90,7 +106,7 @@
 
 <p>In this example, we can see that the source language is traditional Chinese, while the target language is English. The use of lowercase and hyphens between English words that we see is merely a useful convention and is not a requirement. In fact, the Sanzang Utils programs do not care which languages and scripts you decide to include in your translation tables, but we should keep in mind that the translation program is mostly useful for translating from Chinese, Japanese, and Korean, due to its translation methodology.</p>
 
-<h2 id="szu_r">Text Reformatting: <i>szu-r</i></h2>
+<h2 id="szu_r">CJK Text Reformatting: <i>szu-r</i></h2>
 
 <p>The first utility to learn is <i>szu-r</i>, the reflow or reformatting utility. This is a formatter for CJK text that first collapses all vertical spacing, and then reorganizes the text into lines based on the horizontal spacing and punctuation found. It divides CJK text into logical lines that may be translated more safely. Usage information for this tool is shown below:</p>
 
@@ -116,15 +132,13 @@ Options:
 世尊食時，
 著衣持缽</pre>
 
-<p>This is exactly what we want: lines of text that can be safely translated.</p>
-
-<p>Of course, we could also redirect the output to a file:</p>
+<p>This is exactly what we want: lines of text that can be safely translated. We can also redirect the output to a file:</p>
 
 <pre>$ szu-r bad.txt &gt; good.txt</pre>
 
-<p>This is a normal way to preprocess a text before running the translator.</p>
+<p>This is a normal way to preprocess a text before running the translator. In this way, you can ensure that your text is formatted for translation.</p>
 
-<h2 id="szu_t">Translation: <i>szu-t</i></h2>
+<h2 id="szu_t">CJK Text Translation: <i>szu-t</i></h2>
 
 <p>The next step is to learn <i>szu-t</i>, the translator. Since this is the main translation program, it is important to understand its method and features. The usage information for <i>szu-t</i> is shown below:</p>
 
@@ -154,7 +168,7 @@ Options:
 
 <p>Although this example is trivial, it shows some of the simplicity and flexibility of the system. By just defining a table of translation rules, you are able to define your own way of translating. The translation method scales up as well, as it is anticipated that a truly capable translation system naturally requires thousands of translation rules.</p>
 
-<p>Consider the following translated excerpt from a traditional Chinese text:</p>
+<p>Consider the following translated excerpt from an ancient Buddhist text, in traditional Chinese:</p>
 
 <pre>43.1|善男子、善女人，
 43.2| shàn-nánzǐ & shàn-nǚrén ,
