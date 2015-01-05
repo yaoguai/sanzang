@@ -139,7 +139,10 @@ def main():
         with open(args[0], encoding='utf-8-sig') as table_fd:
             table = read_ss_table(table_fd)
         if len(args) == 1:
-            subst_file(table, sys.stdin, sys.stdout)
+            if sys.stdin.isatty():
+                subst_file(table, sys.stdin, sys.stdout, buffer_size=1)
+            else:
+                subst_file(table, sys.stdin, sys.stdout)
         else:
             for file_path in args[1:]:
                 with open(file_path, 'r', encoding='utf-8-sig') as fin:

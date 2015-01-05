@@ -129,7 +129,7 @@ def tr_fmt(table, buffer, start):
     return listing
 
 
-def tr_file(table, fd_in, fd_out, start_idx=1):
+def tr_file(table, fd_in, fd_out, start_idx=1, buf_size=100):
     """
     Translate from one file to another (buffered).
 
@@ -138,7 +138,6 @@ def tr_file(table, fd_in, fd_out, start_idx=1):
     as a formatted string to the output.
 
     """
-    buf_size = 100
     str_buf = ''
     line_no = start_idx
     for line in fd_in:
@@ -190,7 +189,10 @@ def main():
         with open(args[0], 'r', encoding='utf-8-sig') as table_fd:
             table = read_table(table_fd)
         if len(args) == 1:
-            tr_file(table, sys.stdin, sys.stdout)
+            if sys.stdin.isatty():
+                tr_file(table, sys.stdin, sys.stdout, start_idx=1, buf_size=1)
+            else:
+                tr_file(table, sys.stdin, sys.stdout)
         else:
             idx = 1
             for file_path in args[1:]:
