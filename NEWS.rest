@@ -1,6 +1,12 @@
 Sanzang Utils News
 ==================
 
+1.2.0 (2015-01-05)
+------------------
+* szu-ss: read and process one line at a time if stdin is a TTY.
+* szu-t: read and process one line at a time if stdin is a TTY.
+* szu-t: at EOF, do not translate the buffer if it is an empty string.
+
 1.1.2 (2015-01-03)
 ------------------
 * szu-ss updated with major performance improvements (~200-300%).

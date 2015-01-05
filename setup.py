@@ -12,7 +12,7 @@ setup(
     # Basic information
     #
     name='sanzang-utils',
-    version='1.1.2',
+    version='1.2.0',
     author='yaoguai',
     author_email='lapislazulitexts@gmail.com',
     url='https://github.com/yaoguai/sanzang-utils',
@@ -20,11 +20,11 @@ setup(
     #
     # Descriptions & classifiers
     #
-    description='Translate from Chinese, Japanese, or Korean.',
+    description='Machine Translation from Chinese, Japanese, or Korean.',
     long_description=LONG_DESCRIPTION,
-    keywords='chinese japanese korean cjk asia language translation',
+    keywords='chinese japanese korean cjk asia language machine translation',
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
         'Intended Audience :: Developers',
         'Intended Audience :: Education',
@@ -32,7 +32,6 @@ setup(
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
-        'Operating System :: POSIX',
         'Programming Language :: Python :: 3',
         'Topic :: Text Processing :: Linguistic',
         'Topic :: Utilities'],
