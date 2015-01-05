@@ -146,8 +146,9 @@ def tr_file(table, fd_in, fd_out, start_idx=1, buf_size=100):
             fd_out.write(tr_fmt(table, str_buf, line_no - buf_size + 1))
             str_buf = ''
         line_no += 1
-    position = line_no - str_buf.count('\n')
-    fd_out.write(tr_fmt(table, str_buf, position))
+    if len(str_buf) > 0:
+        position = line_no - str_buf.count('\n')
+        fd_out.write(tr_fmt(table, str_buf, position))
     return line_no
 
 
