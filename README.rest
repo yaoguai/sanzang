@@ -1,8 +1,9 @@
 Sanzang Utils
 =============
 
-**Website:** http://lapislazulitexts.com/sanzang
-**GitHub:** https://github.com/yaoguai/sanzang-utils
+**Website:** <http://lapislazulitexts.com/sanzang>
+
+**GitHub:** <https://github.com/yaoguai/sanzang-utils>
 
 The Sanzang Utilities are a small collection of programs for translating from
 Chinese, Japanese, and Korean (the CJK languages). Unlike most other machine
@@ -58,14 +59,15 @@ behind the system. The tutorial gives practical instruction on exactly how to
 use each component, how they relate to one another, and how you can develop
 your own translation tables.
 
-* *Sanzang Introduction* <http://lapislazulitexts.com/articles/sanzang_intro>
-* *Sanzang Utils Tutorial* <http://lapislazulitexts.com/articles/szu_tutorial>
+**Sanzang Introduction:** <http://lapislazulitexts.com/articles/sanzang_intro>
+
+**Sanzang Utils Tutorial:** <http://lapislazulitexts.com/articles/szu_tutorial>
 
 In addition to the introduction and tutorial, each program also includes a
 tradition Unix manual page that can be used for a short summary and reference.
 
-Versions and Updates
---------------------
+Updates
+-------
 
 Versions of Sanzang Utils follow the scheme N.N.N, indicating the major
 version, minor version, and the patch number. The patch number is incremented
