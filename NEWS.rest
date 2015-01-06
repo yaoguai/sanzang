@@ -1,6 +1,11 @@
 Sanzang Utils News
 ==================
 
+1.2.1 (2015-01-06)
+------------------
+* Fixed formatting for an example in the szu-t manual page.
+* Documentation updates for README.
+
 1.2.0 (2015-01-05)
 ------------------
 * szu-ss: read and process one line at a time if stdin is a TTY.
