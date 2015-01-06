@@ -8,23 +8,25 @@ Sanzang Utils
 Sanzang is a compact and simple cross-platform machine translation system. This
 system is especially useful for translating from CJK languages (Chinese,
 Japanese, and Korean). Unlike most other machine translation system, it is
-useful even for ancient and otherwise difficult texts. Due to its origins in
-translating texts from the Chinese Buddhist canon, the translation system is
-called Sanzang (三藏), a literal translation of the Sanskrit word "Tripitaka,"
-which is a general term for the Buddhist canon.
+useful even for ancient and otherwise difficult texts.
 
-The programs included in Sanzang Utils can be used to generate rough but useful
-translations that closely follow the source text. For example::
+Due to its origins in translating texts from the Chinese Buddhist canon, the
+translation system is called Sanzang (三藏), a literal translation of the
+Sanskrit word "Tripitaka," which is a general term for the Buddhist canon. As
+demonstrated by the Sanzang translator itself::
 
-    $ echo "你好，世界！" | szu-t sztab
-    1.1|你好，世界！
-    1.2| nǐhǎo , shìjiè !
-    1.3| hello , world !
+    $ echo 三藏 | szu-t sztab
+    1.1|三藏
+    1.2| sānzàng
+    1.3| tripiṭaka
 
 Anyone can learn how to use Sanzang Utils and use these programs to read and
 analyze texts. Unlike most other systems, Sanzang is small and approachable.
-You can easily develop your own translation rules and then apply them to
-generate useful translations.
+You can easily develop your own translation rules, and these rules are simply
+stored in a text file and applied at runtime.
+
+Components
+----------
 
 Sanzang Utils includes the following programs:
 
@@ -48,7 +50,7 @@ To install these programs the "Python way," you can use setup.py::
 
 Otherwise, you could do it the "Unix way" by using the included makefile. If
 you install with the makefile, you can also uninstall easily with the makefile.
-The choice of which installation method to use is just a personal preference.
+The choice of which installation method to use is a personal preference.
 
 Documentation
 -------------
