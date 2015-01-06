@@ -5,13 +5,12 @@ Sanzang Utils
 
 **GitHub:** <https://github.com/yaoguai/sanzang-utils>
 
-The Sanzang Utilities are a small collection of programs for translating from
-Chinese, Japanese, and Korean (the CJK languages). Unlike most other machine
-translation systems, this system is useful even for ancient and otherwise
-difficult texts. Due to its origins in translating texts from the Chinese
-Buddhist canon, this translation system is called Sanzang (三藏), a literal
-translation of the Sanskrit word "Tripitaka," which is a general term for the
-Buddhist canon.
+Sanzang Utils are a small collection of programs for translating from Chinese,
+Japanese, and Korean (the CJK languages). Unlike most other machine translation
+systems, this system is useful even for ancient and otherwise difficult texts.
+Due to its origins in translating texts from the Chinese Buddhist canon, this
+translation system is called Sanzang (三藏), a literal translation of the
+Sanskrit word "Tripitaka," which is a general term for the Buddhist canon.
 
 The programs included in Sanzang Utils can be used to generate rough but useful
 translations that closely follow the source text. For example::
