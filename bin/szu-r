@@ -43,6 +43,25 @@ Options:
 """
 
 
+def set_stdio_utf8():
+    """
+    Set standard I/O streams to UTF-8.
+
+    Attempt to reassign standard I/O streams to new streams using UTF-8.
+    Standard input should discard any leading BOM. If an error is raised,
+    assume the environment is inflexible but correct (IDLE).
+    """
+    try:
+        sys.stdin = io.TextIOWrapper(
+            sys.stdin.detach(), encoding='utf-8-sig', line_buffering=True)
+        sys.stdout = io.TextIOWrapper(
+            sys.stdout.detach(), encoding='utf-8', line_buffering=True)
+        sys.stderr = io.TextIOWrapper(
+            sys.stderr.detach(), encoding='utf-8', line_buffering=True)
+    except io.UnsupportedOperation:
+        pass
+
+
 def reflow(text):
     """
     Reformat CJK text according to its punctuation.
@@ -122,15 +141,7 @@ def main():
     out if one is found. Broken pipes and SIGINT are handled silently.
 
     """
-    try:
-        sys.stdin = io.TextIOWrapper(
-            sys.stdin.detach(), encoding='utf-8-sig', line_buffering=True)
-        sys.stdout = io.TextIOWrapper(
-            sys.stdout.detach(), encoding='utf-8', line_buffering=True)
-        sys.stderr = io.TextIOWrapper(
-            sys.stderr.detach(), encoding='utf-8', line_buffering=True)
-    except io.UnsupportedOperation:
-        pass
+    set_stdio_utf8()
 
     if 'SIGPIPE' in dir(signal):
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
