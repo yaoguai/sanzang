@@ -29,6 +29,7 @@ import io
 import os
 import signal
 import sys
+import unicodedata
 
 try:
     import readline
@@ -82,7 +83,7 @@ def table_to_str(tab):
     items.sort(key=lambda x: (-len(x[0]), x[0]))
     for i in items:
         table_str += i[0] + '|' + '|'.join(i[1]) + '\n'
-    return table_str
+    return unicodedata.normalize('NFC', table_str)
 
 
 def edit(table_fpath):

@@ -28,6 +28,7 @@ import getopt
 import io
 import signal
 import sys
+import unicodedata
 
 
 USAGE = """Usage: szu-t [options] table_file [file ...]
@@ -52,7 +53,8 @@ def read_table(table_fd):
     """
     tab = []
     width = -1
-    for line in table_fd.read().split('\n'):
+    table_str = unicodedata.normalize('NFC', table_fd.read())
+    for line in table_str.split('\n'):
         rec = [f.strip() for f in line.split('|')]
         if width != -1 and width == len(rec):
             tab.append(rec)
@@ -91,6 +93,7 @@ def tr_raw(table, text):
     to a column in the translation table.
 
     """
+    text = unicodedata.normalize('NFC', text)
     rules = vocab(table, text)
     text = text.replace('\x1f', '')
     collection = [text]

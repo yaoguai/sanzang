@@ -29,6 +29,7 @@ import io
 import re
 import signal
 import sys
+import unicodedata
 
 
 USAGE = """Usage: szu-r [options] [file ...]
@@ -102,7 +103,8 @@ def reflow_file(fd_in, fd_out, buffer_size=1000):
             i = len(str_buf) - 1
             while i > 0:
                 if str_buf[i-1] in enders and str_buf[i] not in enders:
-                    fd_out.write(reflow(str_buf[:i]))
+                    norm_buffer = unicodedata.normalize('NFC', str_buf[:i])
+                    fd_out.write(reflow(norm_buffer))
                     str_buf = str_buf[i:]
                     i = -1
                 else:
