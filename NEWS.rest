@@ -1,6 +1,10 @@
 Sanzang Utils News
 ==================
 
+1.2.2 (2015-02-02)
+------------------
+* Added basic Unicode normalization for safety and compatibility.
+
 1.2.1 (2015-01-06)
 ------------------
 * Fixed formatting for an example in the szu-t manual page.
