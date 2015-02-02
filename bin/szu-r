@@ -50,6 +50,7 @@ def set_stdio_utf8():
     Attempt to reassign standard I/O streams to new streams using UTF-8.
     Standard input should discard any leading BOM. If an error is raised,
     assume the environment is inflexible but correct (IDLE).
+
     """
     try:
         sys.stdin = io.TextIOWrapper(
