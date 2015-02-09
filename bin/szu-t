@@ -113,9 +113,8 @@ def tr_raw(table, text):
     to a column in the translation table.
 
     """
-    text = unicodedata.normalize('NFC', text)
+    text = unicodedata.normalize('NFC', text).replace('\x1f', '')
     rules = vocab(table, text)
-    text = text.replace('\x1f', '')
     collection = [text]
     for col_no in range(1, len(table[0])):
         trans = text

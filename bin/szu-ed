@@ -76,6 +76,7 @@ def read_table(tab_str):
     while each value is a list of the corresponding terms.
 
     """
+    tab_str = unicodedata.normalize('NFC', tab_str)
     tab = {}
     width = -1
     for line in tab_str.split('\n'):
@@ -103,7 +104,7 @@ def table_to_str(tab):
     items.sort(key=lambda x: (-len(x[0]), x[0]))
     for i in items:
         table_str += i[0] + '|' + '|'.join(i[1]) + '\n'
-    return unicodedata.normalize('NFC', table_str)
+    return table_str
 
 
 def edit(table_fpath):
@@ -123,7 +124,7 @@ def edit(table_fpath):
     cmd = '\\set'
     try:
         while True:
-            line = input().strip()
+            line = unicodedata.normalize('NFC', input().strip())
             if line in ('\\get', '\\rm', '\\set'):
                 cmd = line
             elif line == '\\p':
@@ -150,8 +151,7 @@ def edit(table_fpath):
                     toks = [f.strip() for f in line.split('|')]
                     if width == -1 and len(toks) > 1:
                         width = len(toks)
-                        tab[toks[0]] = toks[1:]
-                    elif len(toks) == width:
+                    if len(toks) == width:
                         tab[toks[0]] = toks[1:]
                     else:
                         sys.stderr.write('Invalid assignment: ' + line + '\n')
