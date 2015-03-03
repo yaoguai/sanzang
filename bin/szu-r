@@ -88,12 +88,12 @@ def reflow(text):
 
     # Ender followed by non-ender: newline in between.
     text = re.sub(
-        r'([：，；。？！」』.;:\?])([^：，；。？！」』.;:\?])',
+        r'([：，；。？！」』.;:\?\!])([^：，；。？！」』.;:\?\!])',
         '\\1\n\\2', text, flags=re.M)
 
     # Non-starter, non-ender, followed by a starter: newline in between.
     text = re.sub(
-        r'([^「『　\t：，；。？！」』.;:\?\n])([「『　\t])',
+        r'([^「『　\t：，；。？！」』.;:\?\!\n])([「『　\t])',
         '\\1\n\\2', text, flags=re.M)
 
     # Adjust newlines and return.
