@@ -1,12 +1,19 @@
 SHELL = /bin/sh
+PIP3 = pip3
 PYTHON3 = python3
 
-.PHONY: all clean dist
+.PHONY: all clean dist install uninstall
 
 all:
 
 dist:
 	$(PYTHON3) setup.py sdist
+
+install:
+	$(PIP3) install .
+
+uninstall:
+	$(PIP3) uninstall -y sanzang-utils
 
 clean:
 	rm -f -- *.pyc
