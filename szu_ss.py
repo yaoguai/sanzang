@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-#
 # Copyright (c) 2014 the Sanzang Utils authors
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-""" szu-ss: source code. """
+""" szu_ss: program module. """
 
 
 import getopt
@@ -124,7 +122,7 @@ def subst_file(table, fd_in, fd_out, buffer_size=1000):
     fd_out.write(subst(table, str_buf))
 
 
-def main():
+def main(argv):
     """
     Run as a portable command-line program.
 
@@ -140,7 +138,7 @@ def main():
 
     try:
         verbose = False
-        opts, args = getopt.getopt(sys.argv[1:], 'hv', ['help', 'verbose'])
+        opts, args = getopt.getopt(argv[1:], 'hv', ['help', 'verbose'])
         for option, _ in opts:
             if option in ('-h', '--help'):
                 print(USAGE, end='')
@@ -174,4 +172,4 @@ def main():
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    sys.exit(main(sys.argv))

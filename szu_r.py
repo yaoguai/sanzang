@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-""" szu-r: source code. """
+""" szu_r: program module. """
 
 
 import getopt
@@ -132,7 +132,7 @@ def reflow_file(fd_in, fd_out, buffer_size=1000):
         fd_out.write(reflow(str_buf))
 
 
-def main():
+def main(argv):
     """
     Run szu-r as a portable command-line program.
 
@@ -148,7 +148,7 @@ def main():
 
     try:
         verbose = False
-        opts, args = getopt.getopt(sys.argv[1:], 'hv', ['help', 'verbose'])
+        opts, args = getopt.getopt(argv[1:], 'hv', ['help', 'verbose'])
         for option, _ in opts:
             if option in ('-h', '--help'):
                 print(USAGE, end='')
@@ -174,4 +174,4 @@ def main():
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    sys.exit(main(sys.argv))

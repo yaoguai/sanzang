@@ -41,16 +41,16 @@ Installation
 ------------
 
 To run these programs, Python 3.x is required. Installation on a Unix-like
-platform is advised, but Windows is possible too. If you must use Windows, then
-Cygwin is the best environment for these programs.
+platform is advised, but Windows is possible too. If you are using Windows,
+then Cygwin is the best environment for these programs. To install Sanzang
+Utils, you can call *pip3* to download and install it::
 
-To install these programs the "Python way," you can use setup.py::
+    # pip3 install sanzang-utils
+
+If you do not have *pip3* installed on your system, you can download the
+Sanzang Utils software manually and then install it using the old method::
 
     # python3 setup.py install
-
-Otherwise, you could do it the "Unix way" by using the included makefile. If
-you install with the makefile, you can also uninstall easily with the makefile.
-The choice of which installation method to use is a personal preference.
 
 Documentation
 -------------

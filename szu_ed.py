@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-""" szu-ed: source code. """
+""" szu_ed: program module. """
 
 
 import getopt
@@ -106,12 +106,14 @@ def table_to_str(tab):
     return table_str
 
 
-def edit(table_fpath):
+def edit(table_fpath, input_lines=None):
     """
     Open a translation table and run editor commands.
 
-    Editor commands are read from standard input, and non-error output is
-    written to standard output. Errors are printed to standard error.
+    Editor commands are read from standard input by default, and non-error
+    output is written to standard output. Errors are printed to standard
+    error. If a list of input lines is also specified, then read editor
+    input from this list instead of the standard input.
 
     """
     if not os.path.exists(table_fpath):
@@ -123,7 +125,10 @@ def edit(table_fpath):
     cmd = '\\set'
     try:
         while True:
-            line = unicodedata.normalize('NFC', input().strip())
+            if input_lines:
+                line = unicodedata.normalize('NFC', input_lines.pop(0).strip())
+            else:
+                line = unicodedata.normalize('NFC', input().strip())
             if line in ('\\get', '\\rm', '\\set'):
                 cmd = line
             elif line == '\\p':
@@ -162,7 +167,7 @@ def edit(table_fpath):
         return
 
 
-def main():
+def main(argv):
     """
     Run szu-ed as a portable command-line program.
 
@@ -177,7 +182,7 @@ def main():
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'h', ['help'])
+        opts, args = getopt.getopt(argv[1:], 'h', ['help'])
         for option, _ in opts:
             if option in ('-h', '--help'):
                 print(USAGE, end='')
@@ -196,4 +201,4 @@ def main():
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    sys.exit(main(sys.argv))

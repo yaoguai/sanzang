@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-""" szu-t: source code. """
+""" szu_t: program module. """
 
 
 import getopt
@@ -173,7 +173,7 @@ def tr_file(table, fd_in, fd_out, start_idx=1, buf_size=100):
     return line_no
 
 
-def main():
+def main(argv):
     """
     Run as a portable command-line program.
 
@@ -190,7 +190,7 @@ def main():
 
     verbose = False
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'hv', ['help', 'verbose'])
+        opts, args = getopt.getopt(argv[1:], 'hv', ['help', 'verbose'])
         for option, _ in opts:
             if option in ('-h', '--help'):
                 print(USAGE, end='')
@@ -225,4 +225,4 @@ def main():
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    sys.exit(main(sys.argv))

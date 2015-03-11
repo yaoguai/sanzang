@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+
+""" szu-r: program executable. """
+
+import sys
+import szu_r
+
+if __name__ == '__main__':
+    sys.exit(szu_r.main(sys.argv))

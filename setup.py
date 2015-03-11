@@ -12,7 +12,7 @@ setup(
     # Basic information
     #
     name='sanzang-utils',
-    version='1.2.3',
+    version='1.3.0',
     author='yaoguai',
     author_email='lapislazulitexts@gmail.com',
     url='https://github.com/yaoguai/sanzang-utils',
@@ -39,10 +39,15 @@ setup(
     # Included Python files
     #
     scripts=[
-        'bin/szu-ed',
-        'bin/szu-r',
-        'bin/szu-ss',
-        'bin/szu-t'],
+        'szu-ed',
+        'szu-r',
+        'szu-ss',
+        'szu-t'],
+    py_modules=[
+        'szu_ed',
+        'szu_r',
+        'szu_ss',
+        'szu_t'],
     data_files=[
         ('share/doc/sanzang-utils', [
             'AUTHORS.rest',
@@ -51,8 +56,8 @@ setup(
             'README.rest',
             'TUTORIAL.html']),
         ('share/man/man1', [
-            'man1/szu-ed.1',
-            'man1/szu-r.1',
-            'man1/szu-ss.1',
-            'man1/szu-t.1'])]
+            'szu-ed.1',
+            'szu-r.1',
+            'szu-ss.1',
+            'szu-t.1'])]
 )
