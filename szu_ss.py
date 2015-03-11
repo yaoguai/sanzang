@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-""" szu_ss: program module. """
+""" Sanzang Utils program module for string substitution. """
 
 
 import getopt

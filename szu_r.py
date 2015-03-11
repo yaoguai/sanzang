@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-""" szu_r: program module. """
+""" Sanzang Utils program module for reformatting CJK text. """
 
 
 import getopt
