@@ -1,6 +1,11 @@
 Sanzang Utils News
 ==================
 
+1.3.1 (2015-03-24)
+------------------
+* Fixed input_lines support in szu_ed.py so editing terminates normally.
+* Added a "file written" message to szu-ed. File writing is important...
+
 1.3.0 (2015-03-11)
 ------------------
 * Converted all programs into Python modules that can be imported.
