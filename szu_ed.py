@@ -125,10 +125,12 @@ def edit(table_fpath, input_lines=None):
     cmd = '\\set'
     try:
         while True:
-            if input_lines:
+            if input_lines is None:
+                line = unicodedata.normalize('NFC', input().strip())
+            elif len(input_lines) > 0:
                 line = unicodedata.normalize('NFC', input_lines.pop(0).strip())
             else:
-                line = unicodedata.normalize('NFC', input().strip())
+                return
             if line in ('\\get', '\\rm', '\\set'):
                 cmd = line
             elif line == '\\p':
@@ -138,6 +140,7 @@ def edit(table_fpath, input_lines=None):
             elif line == '\\w' or line == '\\wq':
                 with open(table_fpath, 'w', encoding='utf-8') as fout:
                     fout.write(table_to_str(tab))
+                sys.stderr.write('Saved: ' + table_fpath + '\n')
                 if line == '\\wq':
                     return
             elif line != '' and not line.startswith('\\'):
