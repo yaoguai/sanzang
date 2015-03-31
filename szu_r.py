@@ -25,7 +25,6 @@
 
 import getopt
 import io
-import re
 import signal
 import sys
 import unicodedata
@@ -68,38 +67,33 @@ def reflow(text):
 
     Given a string, this function will reformat ("reflow") the text so that
     words and terms are not broken apart between lines. The function first
-    strips out any leading margins as used by CBETA texts. It then
-    collapses all line breaks, and reformats the text according to
-    horizontal spacing and punctuation.
+    strips out any leading margins as used by CBETA texts. It then adds an
+    extra space following any short lines that might stand alone. Then it
+    reformats the text according to horizontal spacing and punctuation.
 
     CBETA margin format: X01n0020_p0404a01(00)║
 
     """
-    # Remove CBETA margins.
-    text = re.sub(r'^[T|X].*?║', '', text, flags=re.M)
-
-    # Separate poetry from prose. If the line is short and starts with a space,
-    # then add another space at the end to separate it from the following text.
-    #
-    text = re.sub(r'^　(.{1,15})$', '　\\1　', text, flags=re.M)
-
-    # Collapse newlines.
-    text = text.replace('\n', '')
-
-    # Ender followed by non-ender: newline in between.
-    text = re.sub(
-        r'([：，；。？！」』.;:\?\!])([^：，；。？！」』.;:\?\!])',
-        '\\1\n\\2', text, flags=re.M)
-
-    # Non-starter, non-ender, followed by a starter: newline in between.
-    text = re.sub(
-        r'([^「『　\t：，；。？！」』.;:\?\!\n])([「『　\t])',
-        '\\1\n\\2', text, flags=re.M)
-
-    # Adjust newlines and return.
-    if len(text) > 0 and text[-1] != '\n':
-        text += '\n'
-    return text
+    starters = '「『　\t'
+    enders = '：，；。？！」』.;:?!'
+    specials = starters + enders + '\x1f'
+    new_str = ''
+    prev_c = '\x1f'
+    for line in text.split('\n'):
+        if '║' in line:
+            line = line.split('║', 1)[-1]
+        if line.startswith('　') and len(line) < 17:
+            line += '　'
+        for cur_c in line:
+            if prev_c in enders and cur_c not in enders:
+                new_str += '\n'
+            elif cur_c in starters and prev_c not in specials:
+                new_str += '\n'
+            new_str += cur_c
+            prev_c = cur_c
+    if len(new_str) > 0 and new_str[-1] != '\n':
+        new_str += '\n'
+    return new_str
 
 
 def reflow_file(fd_in, fd_out, buffer_size=1000):
@@ -111,7 +105,7 @@ def reflow_file(fd_in, fd_out, buffer_size=1000):
     buffered for higher performance.
 
     """
-    enders = '：，；。？！」』.;:?'
+    enders = '：，；。？！」』.;:?!'
     str_buf = ''
     line_n = 0
 
