@@ -129,7 +129,8 @@ def reflow_file(fd_in, fd_out, buffer_size=1000):
                 else:
                     i = i - 1
     if len(str_buf) > 0:
-        fd_out.write(reflow(str_buf))
+        norm_buffer = unicodedata.normalize('NFC', str_buf)
+        fd_out.write(reflow(norm_buffer))
 
 
 def main(argv):
