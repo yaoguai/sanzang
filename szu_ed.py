@@ -140,7 +140,7 @@ def edit(table_fpath, input_lines=None):
             elif line == '\\w' or line == '\\wq':
                 with open(table_fpath, 'w', encoding='utf-8') as fout:
                     fout.write(table_to_str(tab))
-                sys.stderr.write('Saved: ' + table_fpath + '\n')
+                sys.stderr.write('"%s" (%d lines)\n' % (table_fpath, len(tab)))
                 if line == '\\wq':
                     return
             elif line != '' and not line.startswith('\\'):
