@@ -1,6 +1,13 @@
 Sanzang Utils News
 ==================
 
+1.3.2 (2015-04-01)
+------------------
+* Reimplemented core algorithm for szu-r (cleaner and faster).
+* Added missing delimiter in buffering algorithm for szu-r.
+* Added a bit of missing Unicode normalization to szu-r.
+* Edited writing message for szu-ed to include the line count.
+
 1.3.1 (2015-03-24)
 ------------------
 * Fixed input_lines support in szu_ed.py so editing terminates normally.
