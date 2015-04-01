@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (c) 2014 the Sanzang Utils authors
+# Copyright (c) 2014-2015 the Sanzang Utils authors
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -137,10 +137,8 @@ def main(argv):
 
     """
     set_stdio_utf8()
-
     if 'SIGPIPE' in dir(signal):
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
-
     try:
         verbose = False
         opts, args = getopt.getopt(argv[1:], 'hv', ['help', 'verbose'])
