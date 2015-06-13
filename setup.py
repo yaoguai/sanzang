@@ -4,7 +4,7 @@
 
 from distutils.core import setup
 
-with open('README.rest', 'r', encoding='utf-8') as fin:
+with open('README.rst', 'r', encoding='utf-8') as fin:
     LONG_DESCRIPTION = fin.read()
 
 setup(
@@ -57,10 +57,10 @@ setup(
         'szu_t'],
     data_files=[
         ('share/doc/sanzang-utils', [
-            'AUTHORS.rest',
-            'LICENSE.rest',
-            'NEWS.rest',
-            'README.rest',
+            'AUTHORS.rst',
+            'LICENSE.rst',
+            'NEWS.rst',
+            'README.rst',
             'TUTORIAL.html']),
         ('share/man/man1', [
             'szu-ed.1',
