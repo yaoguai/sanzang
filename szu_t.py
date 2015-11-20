@@ -66,23 +66,16 @@ def read_table(table_fd):
     Read a translation table from an opened file.
 
     Given an open file object, read a well-formatted translation table and
-    return its contents to the caller. If an individual record is formatted
-    incorrectly, then a RuntimeError will be raised.
+    return its contents to the caller.
 
     """
-    tab = []
-    width = -1
     table_str = unicodedata.normalize('NFC', table_fd.read())
+    table = []
     for line in table_str.split('\n'):
-        rec = [f.strip() for f in line.split('|')]
-        if width != -1 and width == len(rec):
-            tab.append(rec)
-        elif width == -1 and len(rec) > 1:
-            width = len(rec)
-            tab.append(rec)
-        elif line.strip() != '':
-            raise RuntimeError('Table error: ' + line.strip())
-    return tab
+        stripped = line.strip()
+        if stripped != '':
+            table.append(stripped.split('|'))
+    return table
 
 
 def vocab(table, text):
