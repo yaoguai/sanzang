@@ -150,15 +150,20 @@ def edit(table_fpath, input_lines=None):
                     except KeyError:
                         sys.stderr.write('Not found: ' + line + '\n')
                 elif cmd == '\\rm':
-                    try:
+                    if line in tab:
+                        print('; DEL %s|%s' % (line, '|'.join(tab[line])))
                         del tab[line]
-                    except KeyError:
+                    else:
                         sys.stderr.write('Not found: ' + line + '\n')
                 elif cmd == '\\set':
                     toks = [f.strip() for f in line.split('|')]
                     if width == -1 and len(toks) > 1:
                         width = len(toks)
                     if len(toks) == width:
+                        if toks[0] in tab:
+                            old = '%s|%s' % (toks[0], '|'.join(tab[toks[0]]))
+                            print('; DEL ' +  old)
+                        print('; SET ' + '|'.join(toks))
                         tab[toks[0]] = toks[1:]
                     else:
                         sys.stderr.write('Invalid assignment: ' + line + '\n')
