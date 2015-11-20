@@ -74,7 +74,7 @@ def read_ss_table(table_fd):
     tab = []
     table_str = unicodedata.normalize('NFC', table_fd.read())
     for line in table_str.split('\n'):
-        rec = [f.strip() for f in line.split('|')]
+        rec = line.split('|')
         if len(rec) == 2:
             tab.append(rec)
             term1, term2 = rec
