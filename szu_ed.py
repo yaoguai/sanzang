@@ -36,12 +36,23 @@ except ImportError:
     pass
 
 
-USAGE = """Usage: szu-ed [options] table_file
+USAGE = r"""Usage: szu-ed [options] table_file
 
-Edit translation table rules using a program of simple commands.
+Command-line editor for Sanzang translation tables.
 
 Options:
   -h, --help       print this help message and exit
+
+Mode-setting commands:
+  \get    print the rule for a source term
+  \set    set a translation rule
+  \rm     remove a translation rule
+
+Instant commands:
+  \p      print all translation rules
+  \w      write table to file
+  \q      quit editor
+  \wq     write table and quit
 
 """
 
@@ -151,7 +162,8 @@ def edit(table_fpath, input_lines=None):
                         sys.stderr.write('Not found: ' + line + '\n')
                 elif cmd == '\\rm':
                     if line in tab:
-                        print('; DEL %s|%s' % (line, '|'.join(tab[line])))
+                        old = line + '|' + '|'.join(tab[line])
+                        sys.stderr.write('; --- ' + old + '\n')
                         del tab[line]
                     else:
                         sys.stderr.write('Not found: ' + line + '\n')
@@ -161,9 +173,9 @@ def edit(table_fpath, input_lines=None):
                         width = len(toks)
                     if len(toks) == width:
                         if toks[0] in tab:
-                            old = '%s|%s' % (toks[0], '|'.join(tab[toks[0]]))
-                            print('; DEL ' +  old)
-                        print('; SET ' + '|'.join(toks))
+                            old = toks[0] + '|' + '|'.join(tab[toks[0]])
+                            sys.stderr.write('; --- ' +  old + '\n')
+                        sys.stderr.write('; +++ ' + '|'.join(toks) + '\n')
                         tab[toks[0]] = toks[1:]
                     else:
                         sys.stderr.write('Invalid assignment: ' + line + '\n')

@@ -1,6 +1,11 @@
 Sanzang Utils News
 ==================
 
+1.3.3 (2016-01-??)
+------------------
+* Added more helpful and verbose output to szu-ed.
+* Removed table format checks from all tools except szu-ed.
+
 1.3.2 (2015-04-01)
 ------------------
 * Reimplemented core algorithm for szu-r (cleaner and faster).
