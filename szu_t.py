@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (c) 2014-2015 the Sanzang Utils authors
+# Copyright (c) 2014-2015 the Sanzang authors
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-"""Sanzang Utils program module for CJK translation."""
+"""Sanzang program module for CJK translation."""
 
 
 import getopt

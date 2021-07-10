@@ -1,4 +1,4 @@
-Sanzang Utils Authors
-=====================
+Sanzang Authors
+===============
 
 * yaoguai <lapislazulitexts@gmail.com>

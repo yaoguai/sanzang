@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Sanzang Utils setup script for packaging and installation."""
+"""Sanzang setup script for packaging and installation."""
 
 from distutils.core import setup
 
