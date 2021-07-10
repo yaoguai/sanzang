@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-""" Sanzang Utils program module for string substitution. """
+"""Sanzang program module for string substitution."""
 
 
 import getopt

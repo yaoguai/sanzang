@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-""" Sanzang Utils program module for table editing. """
+"""Sanzang Utils program module for table editing."""
 
 
 import getopt
@@ -174,7 +174,7 @@ def edit(table_fpath, input_lines=None):
                     if len(toks) == width:
                         if toks[0] in tab:
                             old = toks[0] + '|' + '|'.join(tab[toks[0]])
-                            sys.stderr.write('; --- ' +  old + '\n')
+                            sys.stderr.write('; --- ' + old + '\n')
                         sys.stderr.write('; +++ ' + '|'.join(toks) + '\n')
                         tab[toks[0]] = toks[1:]
                     else:

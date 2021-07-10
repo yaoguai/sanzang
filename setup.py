@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-""" Sanzang Utils setup script for packaging and installation. """
+"""Sanzang Utils setup script for packaging and installation."""
 
 from distutils.core import setup
 
@@ -11,18 +11,17 @@ setup(
     #
     # Basic information
     #
-    name='sanzang-utils',
-    version='1.3.3',
+    name='sanzang',
+    version='1.3.4',
     author='yaoguai',
-    author_email='lapislazulitexts@gmail.com',
-    url='https://github.com/yaoguai/sanzang-utils',
+    url='https://github.com/yaoguai/sanzang',
     license='MIT',
     #
     # Descriptions & classifiers
     #
-    description='Machine Translation from Chinese, Japanese, or Korean.',
+    description='CAT tool for Chinese, Japanese, or Korean.',
     long_description=LONG_DESCRIPTION,
-    keywords='chinese japanese korean cjk asia language machine translation',
+    keywords='chinese japanese korean cjk',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
@@ -35,11 +34,6 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.0',
-        'Programming Language :: Python :: 3.1',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
         'Topic :: Text Processing :: Linguistic',
         'Topic :: Utilities'],
     #
@@ -56,12 +50,11 @@ setup(
         'szu_ss',
         'szu_t'],
     data_files=[
-        ('share/doc/sanzang-utils', [
+        ('share/doc/sanzang', [
             'AUTHORS.rst',
+            'CHANGELOG.rst',
             'LICENSE.rst',
-            'NEWS.rst',
-            'README.rst',
-            'TUTORIAL.html']),
+            'README.rst']),
         ('share/man/man1', [
             'szu-ed.1',
             'szu-r.1',
